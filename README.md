@@ -1,6 +1,6 @@
 # SPRINT - Dashboard Monitoring Agunan & APM Emas 🚀
 
-Ini adalah mockup UI/UX untuk sistem **SPRINT PT Pegadaian (Persero)** yang mencakup Collateral Security System (CSS), pemantauan Agunan, Inventory Tracker, Menu Laporan, dan integrasi log mesin APM Emas.
+Ini adalah mockup UI/UX untuk sistem **CSS** yang mencakup Collateral Security System (CSS), pemantauan Agunan, Inventory Tracker, Menu Laporan, dan integrasi log mesin APM Emas.
 
 ## 🌟 Fitur dan Flow Halaman (Mockup)
 Mockup ini memiliki beberapa *view* yang interaktif dan dapat diuji coba secara langsung:
