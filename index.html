@@ -1,0 +1,2263 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="id" class="scroll-smooth">\
+<head>\
+    <meta charset="UTF-8"/>\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>\
+    <title>SPRINT - PT Pegadaian (CSS, APM Emas & Validasi High Alert)</title>\
+    <!-- Tailwind CSS -->\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <!-- FontAwesome Icons -->\
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\
+    \
+    <style>\
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');\
+        \
+        :root \{ \
+            --sprint-green: #005a43; \
+            --sprint-accent: #00a859;\
+            --sprint-bg: #f4f6f8;\
+        \}\
+\
+        body \{ \
+            background-color: var(--sprint-bg); \
+            font-family: 'Plus Jakarta Sans', sans-serif;\
+            color: #1e293b;\
+            overflow-x: hidden;\
+        \}\
+\
+        * \{\
+            -webkit-tap-highlight-color: transparent;\
+        \}\
+\
+        .bg-sprint-nav \{ \
+            background-color: #005a43; \
+            will-change: transform;\
+        \}\
+\
+        .card-sprint \{\
+            background: #ffffff;\
+            border-radius: 16px;\
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);\
+            border: 1px solid #eef0f3;\
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;\
+            will-change: transform, box-shadow;\
+        \}\
+\
+        .card-sprint-hover:hover \{\
+            transform: translate3d(0, -3px, 0);\
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.06), 0 4px 8px -4px rgba(0, 0, 0, 0.04);\
+            border-color: #e2e8f0;\
+        \}\
+\
+        .mobile-screen \{\
+            width: 100%;\
+            max-width: 440px;\
+            height: 840px;\
+            max-height: 92vh;\
+            border-radius: 36px;\
+            border: 10px solid #1e293b;\
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;\
+            overflow-y: auto;\
+            background: #ffffff;\
+            position: relative;\
+            transform: translate3d(0, 0, 0);\
+        \}\
+\
+        .status-card \{\
+            background: #ffffff;\
+            border-radius: 16px;\
+            padding: 16px;\
+            position: relative;\
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;\
+            cursor: pointer;\
+            will-change: transform, box-shadow;\
+        \}\
+        .status-card:hover \{\
+            transform: translate3d(0, -4px, 0);\
+            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.08);\
+        \}\
+\
+        .card-st-pencairan-baru \{ border: 2.5px solid #2563eb; \} \
+        .card-st-siap-disimpan \{ border: 2.5px solid #2563eb; \} \
+        .card-st-masuk-kluis \{ border: 2.5px solid #0d9488; \} \
+        .card-st-keluar-kluis \{ border: 2.5px solid #0d9488; \} \
+        .card-st-ganti-rfid \{ border: 2.5px solid #d97706; \} \
+        .card-st-selesai \{ border: 2.5px solid #1e293b; \} \
+\
+        input[type="date"]::-webkit-calendar-picker-indicator \{\
+            cursor: pointer;\
+            filter: opacity(0.6);\
+            transition: filter 0.2s ease;\
+        \}\
+        input[type="date"]::-webkit-calendar-picker-indicator:hover \{\
+            filter: opacity(1);\
+        \}\
+\
+        .ripple \{\
+            position: relative;\
+            overflow: hidden;\
+            transform: translate3d(0, 0, 0);\
+        \}\
+        .ripple:after \{\
+            content: "";\
+            display: block;\
+            position: absolute;\
+            width: 100%;\
+            height: 100%;\
+            top: 0;\
+            left: 0;\
+            pointer-events: none;\
+            background-image: radial-gradient(circle, #000 10%, transparent 10.01%);\
+            background-repeat: no-repeat;\
+            background-position: 50%;\
+            transform: scale(10, 10);\
+            opacity: 0;\
+            transition: transform .5s, opacity 1s;\
+        \}\
+        .ripple:active:after \{\
+            transform: scale(0, 0);\
+            opacity: .15;\
+            transition: 0s;\
+        \}\
+        .ripple-white:after \{\
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);\
+        \}\
+\
+        .btn-press \{\
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease, box-shadow 0.2s ease;\
+            will-change: transform;\
+        \}\
+        .btn-press:active \{\
+            transform: scale(0.96) translate3d(0, 0, 0) !important;\
+        \}\
+\
+        .view-transition \{\
+            animation: viewFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;\
+            will-change: transform, opacity;\
+        \}\
+        @keyframes viewFadeIn \{\
+            from \{ opacity: 0; transform: translate3d(0, 12px, 0); \}\
+            to \{ opacity: 1; transform: translate3d(0, 0, 0); \}\
+        \}\
+\
+        @keyframes fadeIn \{\
+            from \{ opacity: 0; transform: translateY(8px); \}\
+            to \{ opacity: 1; transform: translateY(0); \}\
+        \}\
+        .animate-fade-in \{\
+            animation: fadeIn 0.35s ease-out forwards;\
+        \}\
+\
+        .modal-backdrop-animate \{\
+            animation: backdropFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;\
+        \}\
+        @keyframes backdropFadeIn \{\
+            from \{ opacity: 0; backdrop-filter: blur(0px); \}\
+            to \{ opacity: 1; backdrop-filter: blur(4px); \}\
+        \}\
+\
+        .modal-content-animate \{\
+            animation: modalScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;\
+            will-change: transform, opacity;\
+        \}\
+        @keyframes modalScaleUp \{\
+            from \{ opacity: 0; transform: scale(0.92) translate3d(0, 10px, 0); \}\
+            to \{ opacity: 1; transform: scale(1) translate3d(0, 0, 0); \}\
+        \}\
+\
+        .skeleton \{\
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);\
+            background-size: 200% 100%;\
+            animation: skeletonLoading 1.5s infinite ease-in-out;\
+            border-radius: 8px;\
+        \}\
+        @keyframes skeletonLoading \{\
+            0% \{ background-position: 200% 0; \}\
+            100% \{ background-position: -200% 0; \}\
+        \}\
+\
+        ::-webkit-scrollbar \{\
+            width: 6px;\
+            height: 6px;\
+        \}\
+        ::-webkit-scrollbar-track \{\
+            background: #f1f5f9;\
+        \}\
+        ::-webkit-scrollbar-thumb \{\
+            background: #cbd5e1;\
+            border-radius: 10px;\
+        \}\
+        ::-webkit-scrollbar-thumb:hover \{\
+            background: #94a3b8;\
+        \}\
+    </style>\
+</head>\
+<body class="min-h-screen flex flex-col pb-10 antialiased selection:bg-emerald-500 selection:text-white">\
+\
+    <!-- TOP NAVBAR SPRINT -->\
+    <header class="bg-sprint-nav text-white h-16 px-8 flex items-center justify-between sticky top-0 z-40 shadow-md">\
+        <div class="flex items-center space-x-6">\
+            <div class="flex items-center space-x-2 cursor-pointer group btn-press" onclick="switchDashboardTab('main')">\
+                <div class="w-8 h-8 rounded-xl bg-emerald-400/20 flex items-center justify-center group-hover:bg-emerald-400/30 transition-all duration-300">\
+                    <i class="fa-solid fa-bolt text-emerald-400 text-lg italic group-hover:scale-110 transition-transform"></i>\
+                </div>\
+                <span class="font-extrabold text-2xl tracking-wider italic">SPRINT</span>\
+            </div>\
+            \
+            <div class="relative w-96">\
+                <input type="text" placeholder="Cari (contoh: Pengajuan Non Gadai)" class="w-full pl-9 pr-4 py-2 bg-white/95 focus:bg-white text-slate-800 text-xs rounded-xl font-medium outline-none placeholder-gray-400 shadow-inner focus:ring-2 focus:ring-emerald-400/50 transition-all duration-200">\
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-xs"></i>\
+            </div>\
+        </div>\
+\
+        <div class="flex items-center space-x-6">\
+            <div class="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition btn-press">\
+                <i class="fa-regular fa-clipboard text-lg"></i>\
+                <span class="text-xs font-bold">Riwayat</span>\
+                <span class="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-sm animate-pulse">12</span>\
+            </div>\
+\
+            <div class="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition btn-press">\
+                <i class="fa-regular fa-bell text-lg"></i>\
+                <span class="text-xs font-bold">Notifikasi</span>\
+            </div>\
+\
+            <div class="h-6 w-[1px] bg-white/20"></div>\
+\
+            <div class="flex items-center space-x-3 cursor-pointer group">\
+                <div class="text-right leading-tight">\
+                    <p id="header-user-name" class="text-xs font-extrabold tracking-wide group-hover:text-emerald-200 transition">KURNIADI</p>\
+                    <span id="header-user-role" class="text-[10px] text-emerald-200 font-semibold">Pengelola Agunan</span>\
+                </div>\
+                <i class="fa-solid fa-chevron-down text-xs text-emerald-200 group-hover:transform group-hover:translate-y-0.5 transition"></i>\
+            </div>\
+        </div>\
+    </header>\
+\
+    <!-- CONTAINER GLOBAL SKELETON LOADING SIMULATOR -->\
+    <div id="global-skeleton-loader" class="hidden max-w-[1600px] w-full mx-auto p-6 space-y-6">\
+        <div class="h-8 w-48 skeleton"></div>\
+        <div class="grid grid-cols-12 gap-5">\
+            <div class="col-span-8 space-y-5">\
+                <div class="h-32 w-full skeleton"></div>\
+                <div class="h-40 w-full skeleton"></div>\
+            </div>\
+            <div class="col-span-4 space-y-5">\
+                <div class="h-40 w-full skeleton"></div>\
+                <div class="h-32 w-full skeleton"></div>\
+            </div>\
+        </div>\
+    </div>\
+\
+    <!-- VIEW 1: DASHBOARD UTAMA SPRINT -->\
+    <div id="view-dashboard-main" class="flex-1 p-6 max-w-[1600px] w-full mx-auto space-y-5 view-transition">\
+        <h1 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">\
+            Dashboard\
+        </h1>\
+\
+        <div class="grid grid-cols-12 gap-5 items-start">\
+            \
+            <!-- LEFT COLUMN -->\
+            <div class="col-span-12 lg:col-span-8 space-y-5">\
+                \
+                <!-- ROW 1: EGC/OGC - OSL - NPL STATS -->\
+                <div class="card-sprint card-sprint-hover p-5 grid grid-cols-3 gap-4 divide-x divide-gray-100">\
+                    <div class="space-y-3">\
+                        <div class="flex items-center justify-between">\
+                            <span class="font-extrabold text-sm text-slate-800">EGC / OGC <i class="fa-regular fa-circle-question text-gray-400 text-xs"></i></span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400">Pencapaian per Pegawai</p>\
+                        <div class="flex items-center space-x-6 pt-1">\
+                            <div><p class="text-[10px] text-slate-400 font-bold">Referral</p><p class="text-base font-black text-slate-800 counter-anim" data-target="7">0</p></div>\
+                            <div><p class="text-[10px] text-slate-400 font-bold">Closing</p><p class="text-base font-black text-slate-800 counter-anim" data-target="8">0</p></div>\
+                            <div><p class="text-[10px] text-slate-400 font-bold">Total XP</p><p class="text-base font-black text-slate-800 counter-anim" data-target="3367">0</p></div>\
+                        </div>\
+                    </div>\
+\
+                    <div class="pl-4 space-y-3">\
+                        <div class="flex items-center justify-between">\
+                            <span class="font-extrabold text-sm text-slate-800">OSL <i class="fa-regular fa-circle-question text-gray-400 text-xs"></i></span>\
+                            <span class="bg-red-50 text-red-500 text-[10px] font-bold px-1.5 py-0.5 rounded">0%</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400">OSL Gross</p>\
+                        <div class="pt-1">\
+                            <p class="text-[10px] text-slate-400 font-bold">Pencapaian</p>\
+                            <p class="text-xs font-black text-slate-800">Rp 0 / Rp 0</p>\
+                        </div>\
+                    </div>\
+\
+                    <div class="pl-4 space-y-3">\
+                        <div class="flex items-center justify-between">\
+                            <span class="font-extrabold text-sm text-slate-800">NPL <i class="fa-regular fa-circle-question text-gray-400 text-xs"></i></span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400">Kualitas Kredit</p>\
+                        <div class="flex items-center space-x-6 pt-1">\
+                            <div><p class="text-[10px] text-slate-400 font-bold">Skor Gadai</p><p class="text-xs font-black text-slate-800">0 <span class="text-[10px] font-normal text-slate-400">0%</span></p></div>\
+                            <div><p class="text-[10px] text-slate-400 font-bold">Skor Non Gadai</p><p class="text-xs font-black text-slate-800">0 <span class="text-[10px] font-normal text-slate-400">0%</span></p></div>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <!-- ROW 2: CSS (COLLATERAL SECURITY SYSTEM) -->\
+                <div class="grid grid-cols-2 gap-5">\
+                    <div class="card-sprint card-sprint-hover p-5 border-2 border-emerald-500/30 relative overflow-hidden">\
+                        <div class="flex items-center justify-between mb-5">\
+                            <div class="flex items-center space-x-2">\
+                                <i class="fa-solid fa-shield-halved text-emerald-600 text-base"></i>\
+                                <h2 class="font-extrabold text-slate-800 text-sm">CSS (Collateral Security System)</h2>\
+                            </div>\
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm">NEW</span>\
+                        </div>\
+\
+                        <div class="grid grid-cols-4 gap-2">\
+                            <!-- Icon 1: Menu Action -->\
+                            <div onclick="openHandheldModal('normal')" class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-qrcode text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-emerald-700 transition">Menu Action</span>\
+                            </div>\
+\
+                            <!-- Icon 2: Dashboard Monitoring -->\
+                            <div onclick="switchDashboardTab('monitoring')" class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-chart-line text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-blue-700 transition">Dashboard Monitoring</span>\
+                            </div>\
+\
+                            <!-- Icon 3: Inventory Tracker -->\
+                            <div onclick="switchDashboardTab('inventory')" class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-boxes-stacked text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-indigo-700 transition">Inventory Tracker</span>\
+                            </div>\
+\
+                            <!-- Icon 4: Menu Laporan -->\
+                            <div onclick="switchDashboardTab('laporan')" class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-file-contract text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-amber-700 transition">Menu Laporan</span>\
+                            </div>\
+                        </div>\
+                    </div>\
+\
+                    <div class="card-sprint card-sprint-hover p-5">\
+                        <h2 class="font-extrabold text-slate-800 text-sm mb-5">EGC/OGC</h2>\
+                        <div class="flex flex-col items-center cursor-pointer text-center group w-28 btn-press ripple">\
+                            <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                <i class="fa-solid fa-user-plus text-base"></i>\
+                            </div>\
+                            <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-emerald-700 transition">Input Data EGC/OGC</span>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <!-- ROW 3: E-FORM & UTILITAS -->\
+                <div class="grid grid-cols-2 gap-5">\
+                    <div class="card-sprint card-sprint-hover p-5">\
+                        <h2 class="font-extrabold text-slate-800 text-sm mb-5">E-Form</h2>\
+                        <div class="grid grid-cols-3 gap-2">\
+                            <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-id-card text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight">Proses Data Nasabah</span>\
+                            </div>\
+                            <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-users text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight">Manajemen Data Nasabah</span>\
+                            </div>\
+                            <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                                <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                    <i class="fa-solid fa-folder text-base"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight">Manajemen Transaksi</span>\
+                            </div>\
+                        </div>\
+                    </div>\
+\
+                    <div class="card-sprint card-sprint-hover p-5">\
+                        <h2 class="font-extrabold text-slate-800 text-sm mb-5">Utilitas</h2>\
+                        <div class="flex flex-col items-center cursor-pointer text-center group w-24 btn-press ripple">\
+                            <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                <i class="fa-solid fa-print text-base"></i>\
+                            </div>\
+                            <span class="text-[11px] font-bold text-slate-700 leading-tight">Test Print</span>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <!-- ROW 4: SECTION KHUSUS APM EMAS -->\
+                <div id="card-apm-menu" class="hidden grid grid-cols-1 gap-5">\
+                    <div class="card-sprint card-sprint-hover p-5 bg-gradient-to-r from-emerald-50 to-white border border-emerald-200 cursor-pointer hover:shadow-lg transition" onclick="switchDashboardTab('apm')">\
+                        <div class="flex items-center justify-between mb-2">\
+                            <div class="flex items-center space-x-2">\
+                                <i class="fa-solid fa-cash-register text-emerald-600 text-lg"></i>\
+                                <h2 class="font-extrabold text-slate-800 text-sm">Mesin APM EMAS (Gadai Otomatis)</h2>\
+                            </div>\
+                            <span class="bg-emerald-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm animate-pulse">NEW</span>\
+                        </div>\
+                        <p class="text-xs text-slate-500 mb-5 font-medium">Monitoring transaksi dan log data dari seluruh mesin APM Emas secara realtime khusus untuk area cabang Anda.</p>\
+                        <div class="flex gap-6">\
+                            <div class="flex flex-col items-center cursor-pointer text-center group w-28">\
+                                <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 transition shadow-sm">\
+                                    <i class="fa-solid fa-coins text-lg"></i>\
+                                </div>\
+                                <span class="text-[11px] font-bold text-slate-700 leading-tight">Log Transaksi APM</span>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+            </div>\
+\
+            <!-- RIGHT COLUMN -->\
+            <div class="col-span-12 lg:col-span-4 space-y-5">\
+                \
+                <!-- TUGASKU DENGAN NOTIF ALERT CSS -->\
+                <div class="card-sprint card-sprint-hover p-5 space-y-4">\
+                    <div class="flex items-center justify-between">\
+                        <div class="flex items-center space-x-2">\
+                            <h2 class="font-extrabold text-slate-800 text-sm">Tugasku</h2>\
+                            <span class="bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">3</span>\
+                        </div>\
+                        <button class="border border-gray-200 text-slate-600 text-[11px] font-extrabold px-3 py-1 rounded-xl hover:bg-gray-100 btn-press transition">Lihat Semua</button>\
+                    </div>\
+\
+                    <div class="pt-2 border-t space-y-2">\
+                        <!-- Notif E-Form -->\
+                        <div class="flex justify-between items-center py-1">\
+                            <span class="text-xs font-bold text-slate-700">E-Form</span>\
+                            <span class="text-xs font-black text-emerald-600">2</span>\
+                        </div>\
+                        <!-- Notif Alert CSS -->\
+                        <div class="flex justify-between items-center p-2.5 bg-amber-50/80 border border-amber-200/80 rounded-2xl cursor-pointer hover:bg-amber-100/90 btn-press transition shadow-xs ripple" onclick="switchDashboardTab('monitoring')">\
+                            <div class="flex items-center space-x-2">\
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xs animate-bounce"></i>\
+                                <span class="text-xs font-extrabold text-amber-900">Alert CSS (Barang Keluar Kluis)</span>\
+                            </div>\
+                            <span class="text-xs font-black bg-amber-500 text-white px-2 py-0.5 rounded-full shadow-sm">1</span>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <!-- MENU FAVORIT -->\
+                <div class="card-sprint card-sprint-hover p-5 space-y-4">\
+                    <div class="flex items-center justify-between">\
+                        <h2 class="font-extrabold text-slate-800 text-sm">Menu Favorit</h2>\
+                        <button class="border border-gray-200 text-slate-600 text-[11px] font-extrabold px-3 py-1 rounded-xl hover:bg-gray-100 btn-press transition">Atur</button>\
+                    </div>\
+\
+                    <div class="py-6 flex flex-col items-center justify-center cursor-pointer group btn-press ripple rounded-2xl border border-dashed border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/30 transition-all duration-300">\
+                        <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                            <i class="fa-solid fa-plus text-base"></i>\
+                        </div>\
+                        <span class="text-xs font-bold text-emerald-700">Tambah Menu</span>\
+                    </div>\
+                </div>\
+\
+                <!-- MONITORING -->\
+                <div class="card-sprint card-sprint-hover p-5 space-y-4">\
+                    <h2 class="font-extrabold text-slate-800 text-sm">Monitoring</h2>\
+                    <div class="grid grid-cols-3 gap-2">\
+                        <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                            <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                <i class="fa-solid fa-chart-column text-base"></i>\
+                            </div>\
+                            <span class="text-[11px] font-bold text-slate-700 leading-tight">Dashboard Kinerja</span>\
+                        </div>\
+                        <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                            <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                <i class="fa-solid fa-eye text-base"></i>\
+                            </div>\
+                            <span class="text-[11px] font-bold text-slate-700 leading-tight">Monitoring Waskat</span>\
+                        </div>\
+                        <div class="flex flex-col items-center cursor-pointer text-center group btn-press ripple">\
+                            <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">\
+                                <i class="fa-solid fa-scale-balanced text-base"></i>\
+                            </div>\
+                            <span class="text-[11px] font-bold text-slate-700 leading-tight">Saldo List Gadai/Rahn</span>\
+                        </div>\
+                    </div>\
+                </div>\
+\
+            </div>\
+\
+        </div>\
+    </div>\
+\
+\
+    <!-- VIEW: DASHBOARD APM EMAS -->\
+    <div id="view-apm" class="hidden flex-1 p-6 max-w-[1650px] w-full mx-auto space-y-5 view-transition">\
+        <div class="flex items-center justify-between">\
+            <div class="flex items-center space-x-3">\
+                <button onclick="switchDashboardTab('main')" class="text-slate-600 hover:text-slate-900 font-bold text-lg btn-press">\
+                    <i class="fa-solid fa-arrow-left"></i>\
+                </button>\
+                <h1 class="text-xl font-black text-slate-800">Dashboard Log Transaksi APM EMAS</h1>\
+            </div>\
+            <button onclick="switchDashboardTab('main')" class="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-slate-200 btn-press">\
+                Kembali ke Dashboard\
+            </button>\
+        </div>\
+\
+        <!-- ALERT PENGINGAT TRANSAKSI > 50 -->\
+        <div id="alert-apm-capacity" class="card-sprint p-4 bg-amber-50 border-l-8 border-l-amber-500 flex flex-col sm:flex-row justify-between sm:items-center transition-all duration-300 gap-4 hidden">\
+            <div class="flex items-start sm:items-center space-x-4">\
+                <div class="w-10 h-10 min-w-[40px] rounded-full bg-amber-200 text-amber-700 flex items-center justify-center animate-bounce shadow-sm">\
+                    <i class="fa-solid fa-triangle-exclamation text-lg"></i>\
+                </div>\
+                <div>\
+                    <h3 class="font-extrabold text-amber-900 text-sm">Peringatan Kapasitas Mesin APM!</h3>\
+                    <p class="text-xs font-semibold text-amber-800 mt-1">\
+                        Mesin <span id="alert-mesin-nama" class="font-black bg-amber-200 px-1.5 py-0.5 rounded">-</span> telah mencapai <span class="font-black text-red-600 text-sm">52/50 Transaksi</span>. Petugas cabang terdekat diharap segera melakukan pengambilan fisik emas jaminan di dalam mesin.\
+                    </p>\
+                </div>\
+            </div>\
+            <button onclick="resolveApmAlert()" class="whitespace-nowrap bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl transition shadow-md flex items-center space-x-2 btn-press">\
+                <i class="fa-solid fa-check-double"></i>\
+                <span>Tandai Selesai Diambil</span>\
+            </button>\
+        </div>\
+\
+        <div class="card-sprint p-6 space-y-5">\
+            <div class="flex justify-between items-center border-b pb-3">\
+                <p class="text-xs font-semibold text-slate-400">Filter Pencarian Data APM (Dibatasi pada Area Operasional Anda) <i class="fa-solid fa-filter ml-1"></i></p>\
+            </div>\
+\
+            <div class="grid grid-cols-12 gap-4 text-xs">\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Lokasi Mesin APM</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50">\
+                            <option>Semua Mesin di Cabang Ini</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Lokasi Cabang APM (Terkunci)</label>\
+                    <div class="relative">\
+                        <select id="filter-cabang-apm" disabled class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-500 outline-none appearance-none bg-slate-100">\
+                        </select>\
+                        <i class="fa-solid fa-lock absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Periode Tanggal (Manual Range)</label>\
+                    <div class="flex items-center space-x-2">\
+                        <div class="relative w-full">\
+                            <input type="date" value="2026-09-01" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer">\
+                        </div>\
+                        <span class="text-slate-400 font-bold">s/d</span>\
+                        <div class="relative w-full">\
+                            <input type="date" value="2026-09-10" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer">\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+\
+            <div class="flex justify-end space-x-3 pt-2">\
+                <button class="border border-slate-300 text-slate-600 font-extrabold text-xs px-8 py-2.5 rounded-xl hover:bg-slate-50 transition btn-press">\
+                    Reset Filter\
+                </button>\
+                <button class="bg-[#00a859] hover:bg-[#008f4c] text-white font-extrabold text-xs px-8 py-2.5 rounded-xl transition shadow-md btn-press">\
+                    Cari Laporan APM\
+                </button>\
+            </div>\
+        </div>\
+\
+        <div class="card-sprint p-5 space-y-4">\
+            <div class="overflow-x-auto rounded-xl border border-slate-100">\
+                <table class="w-full text-left text-xs">\
+                    <thead>\
+                        <tr class="bg-[#005a43] text-white font-extrabold uppercase">\
+                            <th class="p-3 text-center">NO</th>\
+                            <th class="p-3">LOKASI APM</th>\
+                            <th class="p-3">CABANG APM</th>\
+                            <th class="p-3">NO KREDIT</th>\
+                            <th class="p-3">NAMA NASABAH</th>\
+                            <th class="p-3">TANGGAL TRX</th>\
+                            <th class="p-3">DENOMINASI</th>\
+                            <th class="p-3">JML PINJAMAN</th>\
+                            <th class="p-3 text-center">ACTION</th>\
+                        </tr>\
+                    </thead>\
+                    <tbody id="table-apm-body" class="divide-y divide-slate-100 font-medium text-slate-700 bg-white">\
+                    </tbody>\
+                </table>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- VIEW 2: DASHBOARD MONITORING -->\
+    <div id="view-dashboard-monitoring" class="hidden flex-1 p-6 max-w-[1650px] w-full mx-auto space-y-6 view-transition">\
+        \
+        <div class="card-sprint p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-8 border-l-[#005a43] shadow-sm">\
+            <div>\
+                <div class="flex items-center space-x-3">\
+                    <h1 class="text-2xl font-black text-slate-800 tracking-tight">Dashboard Monitoring Agunan & Kluis</h1>\
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full flex items-center shadow-xs">\
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-ping"></span> Realtime Active\
+                    </span>\
+                </div>\
+            </div>\
+\
+            <div class="flex items-center space-x-3">\
+                <button onclick="switchDashboardTab('main')" class="bg-slate-100 text-slate-700 font-extrabold text-xs px-4 py-2.5 rounded-xl hover:bg-slate-200 transition btn-press ripple">\
+                    <i class="fa-solid fa-arrow-left mr-1.5"></i> Kembali Ke Dashboard Utama\
+                </button>\
+            </div>\
+        </div>\
+\
+        <!-- SECTION REALTIME ALERT SYSTEM -->\
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">\
+            <div class="bg-amber-500/10 border border-amber-200/80 rounded-2xl p-5 shadow-sm space-y-4">\
+                <div class="flex items-center justify-between border-b border-amber-200/60 pb-3">\
+                    <div class="flex items-center space-x-2">\
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg"></i>\
+                        <h2 class="font-black text-sm tracking-wide uppercase text-amber-900">Realtime Warning Alert (&lt; 12 Jam)</h2>\
+                    </div>\
+                    <span class="bg-amber-500 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-full">WARNING</span>\
+                </div>\
+                <div class="space-y-2.5" id="alert-list-under12"></div>\
+            </div>\
+\
+            <div class="bg-red-500/10 border border-red-200/80 rounded-2xl p-5 shadow-sm space-y-4">\
+                <div class="flex items-center justify-between border-b border-red-200/60 pb-3">\
+                    <div class="flex items-center space-x-2">\
+                        <i class="fa-solid fa-circle-exclamation text-red-600 text-lg animate-pulse"></i>\
+                        <h2 class="font-black text-sm tracking-wide uppercase text-red-900">Realtime Status Severity HIGH (&gt; 12 Jam)</h2>\
+                    </div>\
+                    <span class="bg-red-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-full animate-pulse">HIGH ALERT</span>\
+                </div>\
+                <div class="space-y-2.5" id="alert-list-over12"></div>\
+            </div>\
+        </div>\
+\
+        <!-- CARDS MONITORING STATUS -->\
+        <div class="card-sprint p-5 space-y-4">\
+            <h2 class="text-sm font-black text-slate-500 uppercase tracking-widest">\
+                Status Barang Jaminan\
+            </h2>\
+            \
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">\
+                <!-- Group 1: Pencairan -->\
+                <div class="p-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl space-y-3">\
+                    <div class="status-card card-st-pencairan-baru btn-press ripple" onclick="filterTableByStatus('BJ Pencairan Baru')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Pencairan Baru</h3>\
+                            <span class="text-[10px] font-extrabold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">Pencairan</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-pencairan-baru" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-regular fa-calendar mr-1"></i>Tgl Pencairan (waktuAktif)</p>\
+                    </div>\
+\
+                    <div class="status-card card-st-siap-disimpan btn-press ripple" onclick="filterTableByStatus('BJ Siap Disimpan')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Siap Disimpan</h3>\
+                            <span class="text-[10px] font-extrabold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">Pencairan</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-siap-disimpan" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-regular fa-calendar mr-1"></i>Tgl Pencairan (waktuAktif)</p>\
+                    </div>\
+                </div>\
+\
+                <!-- Group 2: RFID -->\
+                <div class="p-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl space-y-3">\
+                    <div class="status-card card-st-masuk-kluis btn-press ripple" onclick="filterTableByStatus('BJ Masuk Kluis')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Masuk Kluis</h3>\
+                            <span class="text-[10px] font-extrabold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md">RFID</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-masuk-kluis" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-solid fa-tag mr-1"></i>Tgl Pairing (waktuPairing)</p>\
+                    </div>\
+\
+                    <div class="status-card card-st-keluar-kluis btn-press ripple" onclick="filterTableByStatus('BJ Keluar Kluis')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Keluar Kluis</h3>\
+                            <span class="text-[10px] font-extrabold bg-teal-100 text-teal-800 px-2 py-0.5 rounded-md">RFID</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-keluar-kluis" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-solid fa-tag mr-1"></i>Tgl Pairing (waktuPairing)</p>\
+                    </div>\
+                </div>\
+\
+                <!-- Group 3: Tercatat Keluar & Lunas -->\
+                <div class="p-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl space-y-3">\
+                    <div class="status-card card-st-ganti-rfid btn-press ripple" onclick="filterTableByStatus('BJ Ganti RFID')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Ganti RFID</h3>\
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md">Tercatat Keluar</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-ganti-rfid" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Tgl Keluar (waktuKeluar)</p>\
+                    </div>\
+\
+                    <div class="status-card card-st-selesai btn-press ripple" onclick="filterTableByStatus('BJ Selesai')">\
+                        <div class="flex justify-between items-start">\
+                            <h3 class="text-sm font-black text-slate-800">BJ Selesai</h3>\
+                            <span class="text-[10px] font-extrabold bg-slate-200 text-slate-700 px-2 py-0.5 rounded-md">Lunas/Serah</span>\
+                        </div>\
+                        <div class="mt-4 flex items-baseline justify-between">\
+                            <span class="text-3xl font-black text-slate-900 counter-anim" id="count-selesai" data-target="0">0</span>\
+                            <span class="text-xs font-extrabold text-slate-400">Unit</span>\
+                        </div>\
+                        <p class="text-[10px] font-semibold text-slate-400 mt-2"><i class="fa-solid fa-flag-checkered mr-1"></i>Tgl Selesai (waktuSelesai)</p>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+\
+        <!-- TABEL DASHBOARD MONITORING -->\
+        <div class="card-sprint p-5 space-y-4">\
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">\
+                <h2 class="font-black text-slate-800 text-base">Detail Transaksi Barang Jaminan (<span id="total-mon-count">20</span> Data)</h2>\
+                <button onclick="resetTableFilter()" class="text-xs font-extrabold text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl transition btn-press ripple">\
+                    Reset Filter\
+                </button>\
+            </div>\
+\
+            <div class="overflow-x-auto rounded-xl border border-slate-100">\
+                <table class="w-full text-left text-xs">\
+                    <thead>\
+                        <tr class="bg-slate-100/80 text-slate-700 font-extrabold border-b">\
+                            <th class="p-3.5 text-center">No</th>\
+                            <th class="p-3.5">No SBG</th>\
+                            <th class="p-3.5">Nama Nasabah</th>\
+                            <th class="p-3.5">Rubrik</th>\
+                            <th class="p-3.5">Status Saat Ini</th>\
+                            <th class="p-3.5">Durasi Diluar / Unpairing</th>\
+                            <th class="p-3.5">Waktu Terakhir</th>\
+                            <th class="p-3.5 text-center">Detail</th>\
+                        </tr>\
+                    </thead>\
+                    <tbody id="table-agunan-body" class="divide-y divide-gray-100 font-medium text-slate-700">\
+                    </tbody>\
+                </table>\
+            </div>\
+        </div>\
+\
+    </div>\
+\
+\
+    <!-- VIEW 3: INVENTORY TRACKER -->\
+    <div id="view-inventory-tracker" class="hidden flex-1 p-6 max-w-[1650px] w-full mx-auto space-y-5 view-transition">\
+        <div class="flex items-center justify-between">\
+            <div class="flex items-center space-x-3">\
+                <button onclick="switchDashboardTab('main')" class="text-slate-600 hover:text-slate-900 font-bold text-lg btn-press">\
+                    <i class="fa-solid fa-arrow-left"></i>\
+                </button>\
+                <h1 class="text-xl font-black text-slate-800">Inventory Tracker</h1>\
+            </div>\
+            <button onclick="switchDashboardTab('main')" class="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-200 btn-press transition">\
+                Kembali ke Dashboard\
+            </button>\
+        </div>\
+\
+        <div class="card-sprint p-6 space-y-5">\
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">\
+                <p class="text-xs font-semibold text-slate-400">Last updated on 05/08/2026, 01:18 PM <i class="fa-solid fa-rotate-right ml-1 cursor-pointer hover:rotate-180 transition-transform duration-500"></i></p>\
+                <button class="border border-emerald-600 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-100 px-4 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5 btn-press transition">\
+                    <i class="fa-solid fa-sliders text-xs"></i>\
+                    <span>Filter</span>\
+                </button>\
+            </div>\
+\
+            <div class="grid grid-cols-12 gap-4 text-xs">\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Pilih Periode Tanggal</label>\
+                    <div class="relative">\
+                        <select id="inv-filter-preset" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">-- Semua Tanggal --</option>\
+                            <option value="3d">3 Hari Terakhir</option>\
+                            <option value="7d" selected>7 Hari Terakhir</option>\
+                            <option value="14d">14 Hari Terakhir</option>\
+                            <option value="30d">30 Hari Terakhir</option>\
+                            <option value="3m">3 Bulan Terakhir</option>\
+                            <option value="6m">6 Bulan Terakhir</option>\
+                            <option value="1y">1 Tahun</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-6 space-y-1">\
+                    <div class="flex justify-between items-center">\
+                        <label class="font-extrabold text-slate-700">Filter Tanggal Manual (Range)</label>\
+                        <select id="inv-kategori-tanggal" class="text-[11px] font-bold text-emerald-700 bg-transparent outline-none cursor-pointer">\
+                            <option value="tgl_kredit">Kat: Tanggal Kredit</option>\
+                            <option value="tgl_pengajuan">Kat: Tanggal Pengajuan</option>\
+                            <option value="tgl_jatuh_tempo">Kat: Tanggal Jatuh Tempo</option>\
+                            <option value="tgl_lunas">Kat: Tanggal Pelunasan</option>\
+                            <option value="tgl_ambil">Kat: Tanggal Pengambilan</option>\
+                        </select>\
+                    </div>\
+                    <div class="flex items-center space-x-2">\
+                        <div class="relative w-full">\
+                            <input type="date" id="inv-date-from" value="2026-05-01" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer focus:ring-2 focus:ring-emerald-500/20 transition">\
+                        </div>\
+                        <span class="text-slate-400 font-bold">s/d</span>\
+                        <div class="relative w-full">\
+                            <input type="date" id="inv-date-to" value="2026-08-05" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer focus:ring-2 focus:ring-emerald-500/20 transition">\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Wilayah</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Kanwil</option>\
+                            <option selected>Kanwil IX Jakarta 2</option>\
+                            <option>Kanwil VIII Jakarta 1</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Area</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Area</option>\
+                            <option selected>Area Kramat</option>\
+                            <option>Area Kalideres</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Cabang / Outlet</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Outlet</option>\
+                            <option selected>UPC BEDAHAN</option>\
+                            <option>UPC SALEMBA</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Nama Produk</label>\
+                    <div class="relative">\
+                        <select id="inv-filter-produk" onchange="renderInventoryTracker()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Produk</option>\
+                            <option value="TITIPAN EMAS">TITIPAN EMAS</option>\
+                            <option value="GADAI KCA">GADAI KCA</option>\
+                            <option value="GADAI PRIMA">GADAI PRIMA</option>\
+                            <option value="GADAI KCA KHUSUS">GADAI KCA KHUSUS</option>\
+                            <option value="GADAI TABUNGAN EMAS">GADAI TABUNGAN EMAS</option>\
+                            <option value="GADAI BISNIS">GADAI BISNIS</option>\
+                            <option value="GADAI FLEKSI">GADAI FLEKSI</option>\
+                            <option value="GADAI AGEN">GADAI AGEN</option>\
+                            <option value="GADAI TABUNGAN EMAS PRIMA">GADAI TABUNGAN EMAS PRIMA</option>\
+                            <option value="GADAI TITIPAN EMAS">GADAI TITIPAN EMAS</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Rubrik</label>\
+                    <div class="relative">\
+                        <select id="inv-filter-rubrik" onchange="renderInventoryTracker()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Rubrik</option>\
+                            <option value="barang kantong">barang kantong</option>\
+                            <option value="kendaraan">kendaraan</option>\
+                            <option value="barang elektronik">barang elektronik</option>\
+                            <option value="barang gudang">barang gudang</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-3 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Status Kredit</label>\
+                    <div class="relative">\
+                        <select id="inv-filter-status-kredit" onchange="renderInventoryTracker()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Status Kredit</option>\
+                            <option value="Aktif">Aktif</option>\
+                            <option value="Lunas tebus">Lunas tebus</option>\
+                            <option value="Lunas cutoff">Lunas cutoff</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 space-y-1">\
+                    <label class="font-extrabold text-slate-700">No SBG / Nama Nasabah / NIK</label>\
+                    <input type="text" id="inv-search-sbg" onkeyup="renderInventoryTracker()" placeholder="Ketik No. SBG (contoh: FDN1 2688 2407 2600 5), Nama Nasabah, atau NIK secara manual..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 font-medium text-slate-700 outline-none bg-slate-50/50 placeholder-slate-400 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                </div>\
+            </div>\
+\
+            <div class="flex justify-end space-x-3 pt-2">\
+                <button onclick="resetInventoryFilter()" class="border border-emerald-600 text-emerald-600 font-extrabold text-xs px-8 py-2.5 rounded-xl hover:bg-emerald-50 transition btn-press">\
+                    Reset Filter\
+                </button>\
+                <button onclick="renderInventoryTracker()" class="bg-[#00a859] hover:bg-[#008f4c] text-white font-extrabold text-xs px-8 py-2.5 rounded-xl transition shadow-md btn-press ripple ripple-white">\
+                    Cari Data\
+                </button>\
+            </div>\
+        </div>\
+\
+        <div class="card-sprint p-5 space-y-4">\
+            <div class="flex justify-between items-center text-xs">\
+                <div class="flex items-center space-x-2">\
+                    <span class="text-slate-600 font-bold">Lihat Detail</span>\
+                    <select id="inv-limit-select" onchange="renderInventoryTracker()" class="border border-slate-200 rounded-lg px-2 py-1 font-bold outline-none focus:ring-1 focus:ring-emerald-500">\
+                        <option value="10">10</option>\
+                        <option value="20">20</option>\
+                    </select>\
+                    <span class="text-slate-600 font-bold">baris</span>\
+                </div>\
+            </div>\
+\
+            <div class="overflow-x-auto rounded-xl border border-slate-100">\
+                <table class="w-full text-left text-xs">\
+                    <thead>\
+                        <tr class="bg-[#00a859] text-white font-extrabold">\
+                            <th class="p-3.5 text-center">No</th>\
+                            <th class="p-3.5">Nomor SBG</th>\
+                            <th class="p-3.5">Nama Nasabah</th>\
+                            <th class="p-3.5">No RFID</th>\
+                            <th class="p-3.5">Rubrik</th>\
+                            <th class="p-3.5">Nama Produk</th>\
+                            <th class="p-3.5">Status Produk</th>\
+                            <th class="p-3.5">Status Terakhir CSS</th>\
+                            <th class="p-3.5">Waktu Terakhir (CSS)</th>\
+                            <th class="p-3.5 text-center">Detail</th>\
+                        </tr>\
+                    </thead>\
+                    <tbody id="table-inventory-body" class="divide-y divide-slate-100 font-medium text-slate-700 bg-white">\
+                    </tbody>\
+                </table>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- VIEW 4: MENU LAPORAN -->\
+    <div id="view-dashboard-laporan" class="hidden flex-1 p-6 max-w-[1650px] w-full mx-auto space-y-5 view-transition">\
+        <div class="flex items-center justify-between">\
+            <div class="flex items-center space-x-3">\
+                <button onclick="switchDashboardTab('main')" class="text-slate-600 hover:text-slate-900 font-bold text-lg btn-press">\
+                    <i class="fa-solid fa-arrow-left"></i>\
+                </button>\
+                <h1 class="text-xl font-black text-slate-800">Menu Laporan</h1>\
+            </div>\
+            <button onclick="switchDashboardTab('main')" class="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-200 btn-press transition">\
+                Kembali ke Dashboard\
+            </button>\
+        </div>\
+\
+        <div class="card-sprint p-6 space-y-5">\
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">\
+                <p class="text-xs font-semibold text-slate-400">Last updated on 05/08/2026, 01:18 PM <i class="fa-solid fa-rotate-right ml-1 cursor-pointer hover:rotate-180 transition-transform duration-500"></i></p>\
+                <button class="border border-slate-200 text-slate-700 bg-slate-50 hover:bg-slate-100 px-4 py-1.5 rounded-xl text-xs font-bold flex items-center space-x-1.5 btn-press transition">\
+                    <i class="fa-solid fa-sliders text-xs"></i>\
+                    <span>Filter</span>\
+                </button>\
+            </div>\
+\
+            <div class="grid grid-cols-12 gap-4 text-xs">\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Pilih Periode Tanggal Laporan</label>\
+                    <div class="relative">\
+                        <select id="lap-filter-preset" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="3d">3 Hari Terakhir</option>\
+                            <option value="7d" selected>7 Hari Terakhir</option>\
+                            <option value="14d">14 Hari Terakhir</option>\
+                            <option value="30d">30 Hari Terakhir</option>\
+                            <option value="3m">3 Bulan Terakhir</option>\
+                            <option value="6m">6 Bulan Terakhir</option>\
+                            <option value="1y">1 Tahun</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-8 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Filter Tanggal Manual (Range Tanggal)</label>\
+                    <div class="flex items-center space-x-2">\
+                        <div class="relative w-full">\
+                            <input type="date" id="lap-date-from" value="2026-05-01" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer focus:ring-2 focus:ring-emerald-500/20 transition">\
+                        </div>\
+                        <span class="text-slate-400 font-bold">s/d</span>\
+                        <div class="relative w-full">\
+                            <input type="date" id="lap-date-to" value="2026-08-05" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-medium text-slate-700 outline-none bg-slate-50/50 cursor-pointer focus:ring-2 focus:ring-emerald-500/20 transition">\
+                        </div>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Filter Produk</label>\
+                    <div class="relative">\
+                        <select id="lap-filter-produk" onchange="renderLaporanData()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Produk</option>\
+                            <option value="TITIPAN EMAS">TITIPAN EMAS</option>\
+                            <option value="GADAI KCA">GADAI KCA</option>\
+                            <option value="GADAI PRIMA">GADAI PRIMA</option>\
+                            <option value="GADAI KCA KHUSUS">GADAI KCA KHUSUS</option>\
+                            <option value="GADAI TABUNGAN EMAS">GADAI TABUNGAN EMAS</option>\
+                            <option value="GADAI BISNIS">GADAI BISNIS</option>\
+                            <option value="GADAI FLEKSI">GADAI FLEKSI</option>\
+                            <option value="GADAI AGEN">GADAI AGEN</option>\
+                            <option value="GADAI TABUNGAN EMAS PRIMA">GADAI TABUNGAN EMAS PRIMA</option>\
+                            <option value="GADAI TITIPAN EMAS">GADAI TITIPAN EMAS</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Filter Rubrik</label>\
+                    <div class="relative">\
+                        <select id="lap-filter-rubrik" onchange="renderLaporanData()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Rubrik</option>\
+                            <option value="barang kantong">barang kantong</option>\
+                            <option value="kendaraan">kendaraan</option>\
+                            <option value="barang elektronik">barang elektronik</option>\
+                            <option value="barang gudang">barang gudang</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Filter Status Kredit</label>\
+                    <div class="relative">\
+                        <select id="lap-filter-status-kredit" onchange="renderLaporanData()" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option value="">Semua Status Kredit</option>\
+                            <option value="Aktif">Aktif</option>\
+                            <option value="Lunas tebus">Lunas tebus</option>\
+                            <option value="Lunas cutoff">Lunas cutoff</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Wilayah</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option>Kanwil IX Jakarta 2</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Area</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option>Area Kramat</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+\
+                <div class="col-span-12 md:col-span-4 space-y-1">\
+                    <label class="font-extrabold text-slate-700">Kantor Cabang / Outlet</label>\
+                    <div class="relative">\
+                        <select class="w-full border border-slate-200 rounded-xl px-3 py-2.5 font-bold text-slate-700 outline-none appearance-none bg-slate-50/50 focus:ring-2 focus:ring-emerald-500/20 transition">\
+                            <option>Cabang CP Salemba</option>\
+                        </select>\
+                        <i class="fa-solid fa-chevron-down absolute right-3 top-3.5 text-slate-400 text-xs pointer-events-none"></i>\
+                    </div>\
+                </div>\
+            </div>\
+\
+            <div class="flex justify-end space-x-3 pt-2">\
+                <button onclick="resetLaporanFilter()" class="border border-emerald-600 text-emerald-600 font-extrabold text-xs px-8 py-2.5 rounded-xl hover:bg-emerald-50 transition btn-press">\
+                    Reset Filter\
+                </button>\
+                <button onclick="renderLaporanData()" class="bg-[#00a859] hover:bg-[#008f4c] text-white font-extrabold text-xs px-8 py-2.5 rounded-xl transition shadow-md btn-press ripple ripple-white">\
+                    Cari Laporan\
+                </button>\
+            </div>\
+        </div>\
+\
+        <div class="card-sprint p-5 space-y-5">\
+            <div class="flex items-center space-x-6 border-b border-slate-100 text-xs font-bold text-slate-500 pb-2">\
+                <div id="tab-log-bj" onclick="switchLaporanTab('bj')" class="text-[#005a43] border-b-2 border-[#005a43] pb-2 font-black cursor-pointer transition-all">1. Log Data Barang Jaminan</div>\
+                <div id="tab-log-kluis" onclick="switchLaporanTab('kluis')" class="hover:text-slate-800 cursor-pointer pb-2 transition-all">2. Log Akses Kluis</div>\
+            </div>\
+\
+            <div class="overflow-x-auto rounded-xl border border-slate-100">\
+                <table class="w-full text-left text-xs">\
+                    <thead id="table-laporan-head">\
+                    </thead>\
+                    <tbody id="table-laporan-body" class="divide-y divide-slate-100 font-medium text-slate-700 bg-white">\
+                    </tbody>\
+                </table>\
+            </div>\
+\
+            <div class="flex justify-between items-center pt-3 border-t border-slate-100">\
+                <span class="text-xs font-semibold text-slate-400">Menampilkan data laporan terbaru</span>\
+                <div class="flex items-center space-x-3">\
+                    <button onclick="exportExcelSimulasi()" class="bg-[#00a859] hover:bg-[#008f4c] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center space-x-2 transition shadow-sm btn-press ripple ripple-white">\
+                        <i class="fa-solid fa-file-excel"></i>\
+                        <span>Export Excel</span>\
+                    </button>\
+                    <button onclick="downloadPdfSimulasi()" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center space-x-2 transition shadow-sm btn-press ripple ripple-white">\
+                        <i class="fa-solid fa-print"></i>\
+                        <span>Print / PDF Laporan</span>\
+                    </button>\
+                </div>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- POPUP DETAIL MODAL BIASA (UNTUK TABEL & WARNING ALERT < 12 JAM) -->\
+    <div id="modal-detail-sbg" class="hidden fixed inset-0 bg-slate-900/60 modal-backdrop-animate z-50 flex items-center justify-center p-4">\
+        <div class="bg-white rounded-3xl max-w-5xl w-full p-6 space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto modal-content-animate">\
+            <div class="flex justify-between items-start border-b border-slate-100 pb-3">\
+                <div class="flex items-center space-x-3">\
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shadow-xs">\
+                        <i class="fa-solid fa-file-lines"></i>\
+                    </div>\
+                    <div>\
+                        <h3 class="font-black text-slate-900 text-lg leading-tight" id="pop-title-header">Detail Agunan</h3>\
+                        <p class="text-xs font-semibold text-slate-400">Rincian Komprehensif Data Agunan & Tracking Status</p>\
+                    </div>\
+                </div>\
+                <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center btn-press transition">&times;</button>\
+            </div>\
+\
+            <div id="pop-content-container">\
+            </div>\
+\
+            <div class="flex justify-end pt-2 border-t border-slate-100">\
+                <button onclick="closeDetailModal()" class="bg-[#005a43] hover:bg-[#004735] text-white font-extrabold text-xs px-8 py-2.5 rounded-xl transition shadow-md btn-press ripple ripple-white">\
+                    Tutup Detail\
+                </button>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- ========================================================================= -->\
+    <!-- MODAL KHUSUS HIGH ALERT (> 12 JAM) DENGAN INPUT ALASAN VALIDASI SELESAI   -->\
+    <!-- ========================================================================= -->\
+    <div id="modal-high-alert-validation" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">\
+        <div class="bg-white rounded-[28px] max-w-4xl w-full p-8 space-y-6 shadow-2xl border border-slate-100 max-h-[95vh] overflow-y-auto modal-content-animate">\
+            \
+            <!-- HEADER MODAL SESUAI FOTO -->\
+            <div class="flex justify-between items-start border-b border-slate-100 pb-4">\
+                <div class="flex items-center space-x-3.5">\
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl shadow-xs">\
+                        <i class="fa-solid fa-file-lines"></i>\
+                    </div>\
+                    <div>\
+                        <h3 class="font-black text-slate-900 text-lg leading-tight" id="high-alert-title">Detail Agunan \'96 FDN1 2688 2407 2600 5</h3>\
+                        <p class="text-xs font-semibold text-slate-400 mt-0.5">Rincian Komprehensif Data Agunan & Tracking Status</p>\
+                    </div>\
+                </div>\
+                <button onclick="closeHighAlertModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center transition">&times;</button>\
+            </div>\
+\
+            <!-- DUA KOLOM INFORMASI (SESUAI FOTO LAMPIRAN) -->\
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">\
+                \
+                <!-- KOTAK KIRI: INFORMASI NASABAH & SBG -->\
+                <div class="bg-slate-50/80 rounded-2xl border border-slate-200/80 p-4 space-y-3">\
+                    <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2">Informasi Nasabah & SBG</h4>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Nasabah:</span><span id="ha-nasabah" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">NIK:</span><span id="ha-nik" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">CIF:</span><span id="ha-cif" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nomor SBG:</span><span id="ha-sbg" class="font-extrabold text-emerald-700">-</span></div>\
+                    <div class="flex justify-between pb-0.5"><span class="text-slate-500 font-medium">RFID Active:</span><span id="ha-rfid" class="font-extrabold text-blue-600">-</span></div>\
+                </div>\
+\
+                <!-- KOTAK KANAN: DETAIL PRODUK & TRANSAKSI -->\
+                <div class="bg-slate-50/80 rounded-2xl border border-slate-200/80 p-4 space-y-3">\
+                    <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2">Detail Produk & Transaksi</h4>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Produk:</span><span id="ha-produk" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Rubrik:</span><span id="ha-rubrik" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Status Kredit:</span><span id="ha-statuskredit" class="font-extrabold text-blue-600">-</span></div>\
+                    <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nilai Taksiran:</span><span id="ha-taksiran" class="font-extrabold text-slate-900">-</span></div>\
+                    <div class="flex justify-between pb-0.5"><span class="text-slate-500 font-medium">Uang Pinjaman:</span><span id="ha-pinjaman" class="font-extrabold text-slate-900">-</span></div>\
+                </div>\
+\
+            </div>\
+\
+            <!-- RINCIAN BARANG JAMINAN & FOTO -->\
+            <div class="bg-slate-50/80 rounded-2xl border border-slate-200/80 p-4 space-y-3">\
+                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2">Rincian Barang Jaminan & Foto</h4>\
+                <div class="flex items-center space-x-4">\
+                    <div class="w-24 h-24 min-w-[96px] bg-slate-200 rounded-xl border border-slate-300 flex items-center justify-center overflow-hidden">\
+                        <img id="ha-foto" src="" alt="Foto BJ" class="w-full h-full object-cover">\
+                    </div>\
+                    <div class="space-y-1 text-xs">\
+                        <p id="ha-detailbj" class="font-black text-slate-900 text-sm">Agunan KENDARAAN 13 Unit/Gram</p>\
+                        <p class="text-slate-500 font-medium">Berat bersih: 15.4 Gram</p>\
+                        <p class="text-slate-500 font-medium">Kondisi: Baik, Karatase Teruji Penaksir</p>\
+                    </div>\
+                </div>\
+            </div>\
+\
+            <!-- KOTAK INPUT ALASAN VALIDASI (WAJIB DIISI) -->\
+            <div class="bg-amber-50/70 border-2 border-dashed border-amber-300 rounded-2xl p-4 space-y-2">\
+                <label class="font-extrabold text-amber-900 text-xs flex items-center space-x-1.5">\
+                    <i class="fa-solid fa-pen-to-square text-amber-600"></i>\
+                    <span>Alasan Validasi Selesai (Wajib Diisi):</span>\
+                </label>\
+                <textarea id="input-alasan-validasi" oninput="checkValidationInput()" rows="3" placeholder="Masukkan alasan validasi penyelesaian high alert secara rinci di sini..." class="w-full bg-white border border-amber-300 rounded-xl p-3 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 font-medium placeholder-slate-400 resize-none shadow-xs"></textarea>\
+            </div>\
+\
+            <!-- FOOTER TOMBOL AKSI -->\
+            <div class="flex justify-end items-center space-x-3 pt-3 border-t border-slate-100">\
+                <!-- TOMBOL VALIDASI SELESAI (DISABLE DEFAULT, AKTIF JIKA TEXTAREA ADA ISI) -->\
+                <button id="btn-submit-validasi" onclick="submitValidasiHighAlert()" disabled class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-extrabold text-xs px-6 py-3 rounded-xl transition shadow-md btn-press">\
+                    Validasi Selesai\
+                </button>\
+                <button onclick="closeHighAlertModal()" class="bg-[#005a43] hover:bg-[#004735] text-white font-extrabold text-xs px-6 py-3 rounded-xl transition shadow-md btn-press">\
+                    Tutup Detail\
+                </button>\
+            </div>\
+\
+        </div>\
+    </div>\
+\
+\
+    <!-- POPUP DETAIL APM -->\
+    <div id="modal-detail-apm" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">\
+        <div class="bg-white rounded-3xl max-w-4xl w-full p-8 space-y-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto animate-fade-in">\
+            <div class="flex justify-between items-start border-b pb-4">\
+                <div class="flex items-center space-x-3">\
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg">\
+                        <i class="fa-solid fa-file-invoice-dollar"></i>\
+                    </div>\
+                    <div>\
+                        <h3 class="font-black text-slate-900 text-lg leading-tight">Detail Transaksi APM EMAS</h3>\
+                        <p class="text-xs font-semibold text-slate-400">S-2026091001</p>\
+                    </div>\
+                </div>\
+                <button onclick="closeModalApm()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center transition">&times;</button>\
+            </div>\
+\
+            <div class="grid grid-cols-2 gap-8 text-xs">\
+                <div>\
+                    <h4 class="font-extrabold text-emerald-700 text-sm uppercase border-b-2 border-slate-200 pb-2 mb-4">\uc0\u55357 \u56420  A. Informasi Nasabah</h4>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Nama Nasabah</span><span class="font-bold text-slate-800 text-right">Affan Fitra Akbar</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">No SBG</span><span class="font-bold text-slate-800 text-right">FDN1 2688 2407 26001</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">No Kredit</span><span class="font-bold text-slate-800 text-right">S-2026091001</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">No CIF</span><span class="font-bold text-slate-800 text-right">CIF-0012901</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Tanggal Transaksi</span><span class="font-bold text-slate-800 text-right">10/09/2026 08:15:00</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Jumlah Uang Pinjaman</span><span class="font-bold text-slate-800 text-right">Rp 10.500.000</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Lama Tenor Pinjaman</span><span class="font-bold text-slate-800 text-right">120 Hari</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Tanggal Pelunasan</span><span class="font-bold text-slate-800 text-right">08/01/2027</span></div>\
+                    <div class="flex justify-between mb-3">\
+                        <span class="text-slate-500 font-semibold">Status BJ</span>\
+                        <span class="bg-teal-50 text-teal-700 font-bold px-2 py-1 rounded">BJ Tersimpan APM</span>\
+                    </div>\
+                </div>\
+\
+                <div>\
+                    <h4 class="font-extrabold text-emerald-700 text-sm uppercase border-b-2 border-slate-200 pb-2 mb-4">\uc0\u55357 \u56462  B. Informasi Barang Jaminan</h4>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Merk Emas</span><span class="font-bold text-slate-800 text-right">Galeri 24 (G24)</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Denominasi Emas</span><span class="font-bold text-slate-800 text-right">10 Gram</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Nomor Seri Emas</span><span class="font-bold text-slate-800 text-right">G024XX-9981</span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Link Pembacaan QR</span><span class="font-bold text-blue-600 hover:underline cursor-pointer text-right">Lihat Sertifikat Digital \uc0\u8599 </span></div>\
+                    <div class="flex justify-between mb-3"><span class="text-slate-500 font-semibold">Berat Emas (Sensor APM)</span><span class="font-bold text-slate-800 text-right">10.01 Gram</span></div>\
+                    \
+                    <div class="mt-4 mb-4">\
+                        <span class="text-slate-500 font-semibold block mb-2">Hasil Pengujian XRF Mesin</span>\
+                        <div class="text-left font-bold text-slate-800">\
+                            <div class="mb-1">\'95 XRF 1 = 99.9%</div>\
+                            <div class="mb-1">\'95 XRF 2 = 99.8%</div>\
+                            <div>\'95 XRF 3 = 99.9%</div>\
+                        </div>\
+                    </div>\
+\
+                    <div class="mt-5 block">\
+                        <span class="text-slate-500 font-semibold block mb-2">Foto Emas (Kamera APM):</span>\
+                        <div class="w-32 h-40 bg-slate-200 rounded-lg border border-slate-300 flex items-center justify-center overflow-hidden">\
+                            <img src="https://via.placeholder.com/128x160.png?text=Foto+G24" alt="Foto Emas Jaminan" class="w-full h-full object-cover">\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- MOCKUP HANDHELD SMARTPHONE -->\
+    <div id="modal-action-screen" class="hidden fixed inset-0 bg-slate-900/60 modal-backdrop-animate z-50 flex items-center justify-center p-4">\
+        <div class="mobile-screen flex flex-col justify-between modal-content-animate">\
+            <div class="flex flex-col h-full justify-between">\
+                <div>\
+                    <div class="bg-[#004d3d] text-white px-5 py-4 flex justify-between items-center sticky top-0 z-10 shadow-md">\
+                        <div class="flex items-center space-x-3">\
+                            <i class="fa-solid fa-mobile-screen text-amber-300 text-lg animate-pulse"></i>\
+                            <span class="font-extrabold text-sm tracking-wide">HANDHELD CSS MODULE</span>\
+                        </div>\
+                        <button onclick="closeHandheldModal()" class="w-7 h-7 bg-white/10 hover:bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold transition btn-press">&times;</button>\
+                    </div>\
+\
+                    <div class="p-4 bg-slate-100 border-b flex justify-center space-x-2 text-xs font-extrabold">\
+                        <button id="tab-mode-pairing" onclick="switchHandheldMode('pairing')" class="flex-1 py-2 bg-[#005a43] text-white rounded-xl transition btn-press shadow-xs">\
+                            Proses Pairing\
+                        </button>\
+                        <button id="tab-mode-unpairing" onclick="switchHandheldMode('unpairing')" class="flex-1 py-2 bg-slate-200 text-slate-700 rounded-xl transition btn-press">\
+                            Simulasi Unpairing\
+                        </button>\
+                    </div>\
+\
+                    <div class="p-5 space-y-4 text-xs">\
+                        <div id="flow-pairing-container" class="space-y-4">\
+                            <div id="step-pair-1" class="space-y-2 border p-3.5 rounded-2xl bg-slate-50/80 transition-all">\
+                                <label class="font-black text-slate-800 flex items-center justify-between">\
+                                    <span id="title-step-1">1. SCAN QR CODE SBG</span>\
+                                    <i id="icon-chk-1" class="fa-solid fa-circle-check text-emerald-500 hidden text-base animate-bounce"></i>\
+                                </label>\
+                                <button id="btn-scan-qr-1" onclick="triggerStep1ScanQR()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 btn-press ripple ripple-white">\
+                                    <i class="fa-solid fa-qrcode"></i> Scan QR Code SBG\
+                                </button>\
+                                <div id="res-step-1" class="hidden p-2.5 bg-emerald-100/80 border border-emerald-300 rounded-xl text-[11px] font-bold text-emerald-900 animate-fade-in">\
+                                    \uc0\u10003  Data Nasabah: Dewi Lestari | SBG: FDN1 2688 2407 2600 4\
+                                </div>\
+                            </div>\
+\
+                            <div id="step-pair-2" class="space-y-2 border p-3.5 rounded-2xl bg-slate-50 opacity-40 pointer-events-none transition-all duration-300">\
+                                <label class="font-black text-slate-800 flex items-center justify-between">\
+                                    <span id="title-step-2">2. AMBIL FOTO BJ</span>\
+                                    <i id="icon-chk-2" class="fa-solid fa-circle-check text-emerald-500 hidden text-base animate-bounce"></i>\
+                                </label>\
+                                <button id="btn-foto-2" onclick="triggerStep2Foto()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 btn-press ripple ripple-white">\
+                                    <i class="fa-solid fa-camera"></i> Ambil Foto Langsung\
+                                </button>\
+                                <div id="res-step-2" class="hidden p-2.5 bg-blue-100/80 border border-blue-300 rounded-xl text-[11px] font-bold text-blue-900 animate-fade-in flex items-center space-x-2">\
+                                    <i class="fa-solid fa-image"></i><span id="txt-res-step-2">\uc0\u10003  Foto BJ Terambil & Tersimpan</span>\
+                                </div>\
+                            </div>\
+\
+                            <div id="step-pair-3" class="space-y-2 border p-3.5 rounded-2xl bg-slate-50 opacity-40 pointer-events-none transition-all duration-300">\
+                                <label class="font-black text-slate-800 flex items-center justify-between">\
+                                    <span id="title-step-3">3. SCAN RFID TAG</span>\
+                                    <i id="icon-chk-3" class="fa-solid fa-circle-check text-emerald-500 hidden text-base animate-bounce"></i>\
+                                </label>\
+                                <button onclick="triggerStep3ScanRFID()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold py-2.5 rounded-xl transition flex items-center justify-center gap-2 btn-press ripple">\
+                                    <i class="fa-solid fa-wifi"></i> Scan RFID Tag Reader\
+                                </button>\
+                                <div id="res-step-3" class="hidden p-2.5 bg-amber-100/80 border border-amber-300 rounded-xl text-[11px] font-bold text-amber-900 animate-fade-in">\
+                                    \uc0\u10003  Tag RFID Detected: RFID-TAG-DEWI-004\
+                                </div>\
+                            </div>\
+\
+                            <div id="step-pair-4" class="hidden pt-2 animate-fade-in">\
+                                <button id="btn-submit-pairing" onclick="submitFinalPairingBaru()" class="w-full bg-[#00a859] hover:bg-[#008f4c] text-white font-black py-3.5 rounded-xl shadow-lg transition tracking-wide text-xs flex items-center justify-center space-x-2 btn-press ripple ripple-white">\
+                                    <i class="fa-solid fa-link"></i>\
+                                    <span id="txt-btn-submit-pairing">PAIRING BARANG JAMINAN DAN SIMPAN</span>\
+                                </button>\
+                            </div>\
+\
+                        </div>\
+\
+                        <div id="flow-unpairing-container" class="hidden space-y-4">\
+                            <div class="p-3 bg-red-50 border border-red-200 rounded-xl text-[11px] font-bold text-red-800">\
+                                Simulasi ini akan melepas keterikatan RFID Tag dari SBG (Unpairing), lalu secara otomatis langsung masuk ke menu Pairing Ulang.\
+                            </div>\
+\
+                            <div class="space-y-2">\
+                                <label class="font-black text-slate-700">Scan QR Code SBG Terpairing</label>\
+                                <button onclick="triggerUnpairingScan()" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl btn-press ripple ripple-white">\
+                                    Scan QR SBG (FDN1 2688 2407 2600 5)\
+                                </button>\
+                            </div>\
+\
+                            <div id="unpair-info-box" class="hidden space-y-3 bg-slate-50 border p-3 rounded-xl animate-fade-in">\
+                                <div class="space-y-1 text-[11px]">\
+                                    <p class="font-bold text-slate-800">Nasabah: IKA HIKMAWATI SALAMAH</p>\
+                                    <p class="font-bold text-blue-600">RFID Active: RFID-TAG-26005</p>\
+                                    <p class="font-bold text-teal-700">Status CSS: BJ Masuk Kluis</p>\
+                                </div>\
+\
+                                <button onclick="submitFinalUnpairing()" class="w-full bg-red-600 hover:bg-red-700 text-white font-extrabold py-3 rounded-xl transition shadow-md flex items-center justify-center space-x-2 btn-press ripple ripple-white">\
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i>\
+                                    <span>PROSES UNPAIRING BARANG JAMINAN</span>\
+                                </button>\
+                            </div>\
+                        </div>\
+\
+                    </div>\
+                </div>\
+\
+                <div class="bg-slate-100 border-t p-3 text-center text-[10px] font-bold text-slate-400">\
+                    SPRINT Mobile CSS Module v2.4 \'95 Pegadaian\
+                </div>\
+            </div>\
+        </div>\
+    </div>\
+\
+\
+    <!-- JAVASCRIPT STATE & LOGIC SYSTEM -->\
+    <script>\
+        const currentUser = \{\
+            name: "KURNIADI",\
+            role: "Pengelola Agunan",\
+            cabang: "CP Salemba",\
+        \};\
+\
+        const masterApmList = [\
+            \{ id: "S-2026091001", lokasi: "APM - Stasiun Gambir", cabang: "CP Salemba", nasabah: "Affan Fitra Akbar", tgl: "10/09/2026 08:15", den: "10 Gram", pinjaman: "Rp 10.500.000", isOverCapacity: true \},\
+            \{ id: "S-2026091002", lokasi: "APM - Mall Kelapa Gading", cabang: "CP Kramat", nasabah: "Budi Santoso", tgl: "10/09/2026 09:30", den: "5 Gram", pinjaman: "Rp 5.250.000", isOverCapacity: false \},\
+            \{ id: "S-2026091003", lokasi: "APM - Stasiun Gambir", cabang: "CP Salemba", nasabah: "Siti Aminah", tgl: "09/09/2026 14:20", den: "25 Gram", pinjaman: "Rp 26.000.000", isOverCapacity: true \}\
+        ];\
+\
+        const names = [\
+            "SRI SUPARNI", "YENI SUPRIATI", "RIZKI RAHAYU", "NIA NURMALA NINGRUM", "IKA HIKMAWATI SALAMAH",\
+            "DEWI LESTARI", "BAMBANG SUDARSONO", "ANDI WIJAYA", "BUDI SANTOSO", "SITI AMINAH",\
+            "AGUS HERMANTO", "RINA ROSE", "EKO PRASETYO", "MEGAWATI", "HENDRA GUNAWAN",\
+            "RATNA SARI", "HERU SETIAWAN", "JOKO WIDODO", "NURUL HIDAYAH", "DEDDY CORBUZIER"\
+        ];\
+\
+        const statuses = [\
+            "BJ Keluar Kluis", "BJ Siap Disimpan", "BJ Selesai", "BJ Pencairan Baru", "BJ Keluar Kluis",\
+            "BJ Ganti RFID", "BJ Masuk Kluis", "BJ Ganti RFID", "BJ Masuk Kluis", "BJ Selesai",\
+            "BJ Pencairan Baru", "BJ Keluar Kluis", "BJ Masuk Kluis", "BJ Siap Disimpan", "BJ Selesai",\
+            "BJ Ganti RFID", "BJ Keluar Kluis", "BJ Masuk Kluis", "BJ Siap Disimpan", "BJ Pencairan Baru"\
+        ];\
+\
+        const produkList = [\
+            "GADAI KCA", "GADAI TABUNGAN EMAS", "TITIPAN EMAS", "GADAI PRIMA", "GADAI KCA KHUSUS",\
+            "GADAI BISNIS", "GADAI FLEKSI", "GADAI AGEN", "GADAI TABUNGAN EMAS PRIMA", "GADAI TITIPAN EMAS"\
+        ];\
+\
+        const rubrikList = ["barang kantong", "kendaraan", "barang elektronik", "barang gudang"];\
+        const statusKreditList = ["Aktif", "Lunas tebus", "Lunas cutoff"];\
+\
+        const penaksirList = ["Ahmad Penaksir", "Budi Penaksir", "Citra Penaksir", "Dedi Penaksir"];\
+        const pengelolaList = ["Eko Pengelola", "Fajar Pengelola", "Gita Pengelola", "Hadi Pengelola"];\
+\
+        const facPics = [\
+            \{ name: "KURNIADI", role: "Pimpinan Cabang" \},\
+            \{ name: "SITI NURHALIZA", role: "Pengelola Agunan" \},\
+            \{ name: "AHLAM SUBAGYO", role: "Auditor" \},\
+            \{ name: "AGUS PRABOWO", role: "Pengelola Agunan" \},\
+            \{ name: "RINA WATI", role: "Auditor" \}\
+        ];\
+\
+        let masterAgunanList = [];\
+        let activeStatusFilter = "ALL";\
+        let activeAlertFilter = "ALL";\
+        let activeLaporanTab = "bj";\
+        let activeViewTab = "main";\
+        let currentHighAlertSBG = null;\
+\
+        function initAuth() \{\
+            document.getElementById('header-user-name').innerText = currentUser.name;\
+            document.getElementById('header-user-role').innerText = currentUser.role;\
+\
+            const cardApmMenu = document.getElementById('card-apm-menu');\
+            if (currentUser.role === 'Pengelola Agunan') \{\
+                cardApmMenu.classList.remove('hidden');\
+            \} else \{\
+                cardApmMenu.classList.add('hidden');\
+            \}\
+        \}\
+\
+        function initMasterData() \{\
+            masterAgunanList = [];\
+            for (let i = 1; i <= 20; i++) \{\
+                const numPad = i.toString().padStart(2, '0');\
+                \
+                let durasiJam = 0;\
+                let alertType = "NORMAL";\
+\
+                if (i === 1) \{\
+                    durasiJam = 4; \
+                    alertType = "bj_keluar_under_12";\
+                \} else if (i === 5) \{\
+                    durasiJam = 16; \
+                    alertType = "bj_keluar_over_12";\
+                \} else if (i === 6) \{\
+                    durasiJam = 8; \
+                    alertType = "unpairing_under_12";\
+                \} else if (i === 8) \{\
+                    durasiJam = 20; \
+                    alertType = "unpairing_over_12";\
+                \} else if (i === 12 || i === 17) \{\
+                    durasiJam = 5;\
+                    alertType = "bj_keluar_under_12";\
+                \} else if (i === 16) \{\
+                    durasiJam = 14;\
+                    alertType = "unpairing_over_12";\
+                \}\
+\
+                const rubrikVal = rubrikList[i % rubrikList.length];\
+                const statusKreditVal = statusKreditList[i % statusKreditList.length]; \
+\
+                masterAgunanList.push(\{\
+                    no: i,\
+                    sbg: `FDN1 2688 2407 2600 $\{i\}`,\
+                    nasabah: names[i - 1],\
+                    nik: `3174 0646 0667 00$\{numPad\}`,\
+                    cif: `CIF-00129$\{numPad\}`,\
+                    rfid: `RFID-TAG-260$\{numPad\}`,\
+                    rubrik: rubrikVal,\
+                    produk: produkList[i % produkList.length],\
+                    statusProduk: "Aktif",\
+                    statusCss: statuses[i - 1],\
+                    durasiJam: durasiJam,\
+                    alertType: alertType,\
+                    waktuTerakhir: `05 Agt 2026 08:$\{10 + i\}`,\
+                    taksiran: `Rp $\{(10 + i) * 1000000\}`,\
+                    pinjaman: `Rp $\{(8 + i) * 1000000\}`,\
+                    tglKredit: "01/08/2026 08:00:00",\
+                    tglJatuhTempo: "01/12/2026 17:00:00",\
+                    tglLelang: "15/12/2026",\
+                    tglLunas: i === 3 || i === 10 || i === 15 ? "05/08/2026" : "-",\
+                    tglAmbil: i === 3 || i === 10 || i === 15 ? "05/08/2026 11:30" : "-",\
+                    statusKredit: statusKreditVal,\
+                    detailBj: `Agunan $\{rubrikVal.toUpperCase()\} $\{8 + i\} Unit/Gram`,\
+                    foto: "https://images.unsplash.com/photo-1611591475281-8d282496293b?w=200&auto=format&fit=crop&q=80",\
+                    \
+                    tglAktif: "01/08/2026 08:00:00",\
+                    penaksirPencairan: penaksirList[i % penaksirList.length],\
+                    tglPairing: "01/08/2026 08:10:00",\
+                    penaksirPairing: penaksirList[(i + 1) % penaksirList.length],\
+                    tglMasukKluis: "01/08/2026 09:00:00",\
+                    pengelolaMasuk: pengelolaList[i % pengelolaList.length],\
+                    tglKeluarKluis: statuses[i-1] === 'BJ Keluar Kluis' || statuses[i-1] === 'BJ Ganti RFID' ? `05/08/2026 0$\{i % 9\}:00:00` : "-",\
+                    pengelolaKeluar: statuses[i-1] === 'BJ Keluar Kluis' || statuses[i-1] === 'BJ Ganti RFID' ? pengelolaList[(i + 1) % pengelolaList.length] : "-",\
+                    tglUnpairing: statuses[i-1] === 'BJ Ganti RFID' ? `05/08/2026 0$\{i % 9\}:15:00` : "-",\
+                    penaksirUnpairing: statuses[i-1] === 'BJ Ganti RFID' ? penaksirList[(i + 2) % penaksirList.length] : "-",\
+                    tglPairingUlang: "-",\
+                    penaksirPairingUlang: "-",\
+                    tglSelesai: i === 3 || i === 10 || i === 15 ? "05/08/2026 11:30:00" : "-"\
+                \});\
+            \}\
+        \}\
+\
+        function animateCounters() \{\
+            const counters = document.querySelectorAll('.counter-anim');\
+            counters.forEach(counter => \{\
+                const target = +counter.getAttribute('data-target');\
+                if (!target && target !== 0) \{\
+                    counter.innerText = "0";\
+                    return;\
+                \}\
+                const duration = 600;\
+                const stepTime = 20;\
+                const steps = duration / stepTime;\
+                const increment = target / steps;\
+                let current = 0;\
+\
+                const timer = setInterval(() => \{\
+                    current += increment;\
+                    if (current >= target) \{\
+                        counter.innerText = target.toLocaleString('id-ID');\
+                        clearInterval(timer);\
+                    \} else \{\
+                        counter.innerText = Math.ceil(current).toLocaleString('id-ID');\
+                    \}\
+                \}, stepTime);\
+            \});\
+        \}\
+\
+        function switchDashboardTab(tabName) \{\
+            activeViewTab = tabName;\
+            \
+            const mainViews = ['view-dashboard-main', 'view-dashboard-monitoring', 'view-inventory-tracker', 'view-dashboard-laporan', 'view-apm'];\
+            mainViews.forEach(id => document.getElementById(id).classList.add('hidden'));\
+            \
+            const loader = document.getElementById('global-skeleton-loader');\
+            loader.classList.remove('hidden');\
+\
+            setTimeout(() => \{\
+                loader.classList.add('hidden');\
+\
+                if (tabName === 'monitoring') \{\
+                    const el = document.getElementById('view-dashboard-monitoring');\
+                    el.classList.remove('hidden');\
+                    renderDashboardMonitoring();\
+                \} else if (tabName === 'inventory') \{\
+                    const el = document.getElementById('view-inventory-tracker');\
+                    el.classList.remove('hidden');\
+                    renderInventoryTracker();\
+                \} else if (tabName === 'laporan') \{\
+                    const el = document.getElementById('view-dashboard-laporan');\
+                    el.classList.remove('hidden');\
+                    renderLaporanData();\
+                \} else if (tabName === 'apm') \{\
+                    const el = document.getElementById('view-apm');\
+                    el.classList.remove('hidden');\
+                    renderApmDashboard();\
+                \} else \{\
+                    const el = document.getElementById('view-dashboard-main');\
+                    el.classList.remove('hidden');\
+                    animateCounters();\
+                \}\
+            \}, 180);\
+        \}\
+\
+        function renderApmDashboard() \{\
+            const tbody = document.getElementById('table-apm-body');\
+            tbody.innerHTML = "";\
+\
+            document.getElementById('filter-cabang-apm').innerHTML = `<option value="$\{currentUser.cabang\}">$\{currentUser.cabang\}</option>`;\
+\
+            const filteredApm = masterApmList.filter(item => item.cabang === currentUser.cabang);\
+\
+            let hasOverCapacity = false;\
+            let machineNameOver = "";\
+\
+            filteredApm.forEach((item, idx) => \{\
+                if (item.isOverCapacity) \{\
+                    hasOverCapacity = true;\
+                    machineNameOver = item.lokasi;\
+                \}\
+\
+                tbody.innerHTML += `\
+                    <tr class="hover:bg-slate-50 transition border-b">\
+                        <td class="p-3 text-center font-bold text-slate-600">$\{idx + 1\}</td>\
+                        <td class="p-3 font-bold text-slate-800">$\{item.lokasi\}</td>\
+                        <td class="p-3 text-slate-600">$\{item.cabang\}</td>\
+                        <td class="p-3 font-extrabold text-[#005a43]">$\{item.id\}</td>\
+                        <td class="p-3 font-bold text-slate-800">$\{item.nasabah\}</td>\
+                        <td class="p-3 text-slate-500">$\{item.tgl\}</td>\
+                        <td class="p-3 font-bold">$\{item.den\}</td>\
+                        <td class="p-3 font-black text-blue-600">$\{item.pinjaman\}</td>\
+                        <td class="p-3 text-center">\
+                            <button onclick="openModalApm()" class="border border-emerald-600 text-emerald-600 font-extrabold px-3 py-1 rounded-lg text-[11px] hover:bg-emerald-50 transition">Detail</button>\
+                        </td>\
+                    </tr>\
+                `;\
+            \});\
+\
+            const alertBox = document.getElementById('alert-apm-capacity');\
+            if (hasOverCapacity) \{\
+                document.getElementById('alert-mesin-nama').innerText = machineNameOver;\
+                alertBox.classList.remove('hidden');\
+            \} else \{\
+                alertBox.classList.add('hidden');\
+            \}\
+        \}\
+\
+        function resolveApmAlert() \{\
+            const alertBox = document.getElementById('alert-apm-capacity');\
+            alertBox.classList.add('opacity-0', '-translate-y-4', 'scale-95');\
+            setTimeout(() => \{\
+                alertBox.classList.add('hidden');\
+            \}, 300);\
+        \}\
+\
+        function renderDashboardMonitoring() \{\
+            let listForStats = masterAgunanList;\
+\
+            const c1 = listForStats.filter(x => x.statusCss === 'BJ Pencairan Baru').length;\
+            const c2 = listForStats.filter(x => x.statusCss === 'BJ Siap Disimpan').length;\
+            const c3 = listForStats.filter(x => x.statusCss === 'BJ Masuk Kluis').length;\
+            const c4 = listForStats.filter(x => x.statusCss === 'BJ Keluar Kluis').length;\
+            const c5 = listForStats.filter(x => x.statusCss === 'BJ Ganti RFID').length;\
+            const c6 = listForStats.filter(x => x.statusCss === 'BJ Selesai').length;\
+\
+            document.getElementById('count-pencairan-baru').setAttribute('data-target', c1);\
+            document.getElementById('count-siap-disimpan').setAttribute('data-target', c2);\
+            document.getElementById('count-masuk-kluis').setAttribute('data-target', c3);\
+            document.getElementById('count-keluar-kluis').setAttribute('data-target', c4);\
+            document.getElementById('count-ganti-rfid').setAttribute('data-target', c5);\
+            document.getElementById('count-selesai').setAttribute('data-target', c6);\
+\
+            renderAlertLists();\
+            animateCounters();\
+            renderMonitoringTable();\
+        \}\
+\
+        function renderAlertLists() \{\
+            const listUnder12 = document.getElementById('alert-list-under12');\
+            const listOver12 = document.getElementById('alert-list-over12');\
+\
+            listUnder12.innerHTML = '';\
+            listOver12.innerHTML = '';\
+\
+            const under12Data = masterAgunanList.filter(x => x.alertType.includes('under_12'));\
+            const over12Data = masterAgunanList.filter(x => x.alertType.includes('over_12'));\
+\
+            if (under12Data.length === 0) \{\
+                listUnder12.innerHTML = `<p class="text-xs text-amber-800/60 font-semibold italic">Tidak ada transaksi warning alert (&lt; 12 jam)</p>`;\
+            \} else \{\
+                under12Data.forEach((item) => \{\
+                    const isKeluar = item.alertType === 'bj_keluar_under_12';\
+                    const statusText = isKeluar ? 'BJ Keluar Kluis' : 'BJ Unpairing';\
+                    \
+                    listUnder12.innerHTML += `\
+                        <div class="bg-white p-3 rounded-xl border border-amber-200/80 shadow-xs flex items-center justify-between hover:shadow-md transition">\
+                            <div class="space-y-0.5">\
+                                <p class="text-xs font-black text-slate-800">$\{item.no\}. $\{item.sbg\} - <span class="font-bold text-slate-700">$\{item.nasabah\}</span></p>\
+                                <div class="flex items-center space-x-2 pt-0.5">\
+                                    <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-md">$\{statusText\}</span>\
+                                    <span class="text-[11px] font-bold text-amber-700"><i class="fa-regular fa-clock mr-1"></i>$\{item.durasiJam\} Jam</span>\
+                                </div>\
+                            </div>\
+                            <button onclick="openDetailModal('$\{item.sbg\}')" class="bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] px-3 py-1.5 rounded-lg btn-press transition shadow-xs">\
+                                Detail\
+                            </button>\
+                        </div>\
+                    `;\
+                \}\
+            \}\
+\
+            if (over12Data.length === 0) \{\
+                listOver12.innerHTML = `<p class="text-xs text-red-800/60 font-semibold italic">Tidak ada transaksi severity HIGH (&gt; 12 jam)</p>`;\
+            \} else \{\
+                over12Data.forEach((item) => \{\
+                    const isKeluar = item.alertType === 'bj_keluar_over_12';\
+                    const statusText = isKeluar ? 'BJ Keluar Kluis' : 'BJ Unpairing';\
+\
+                    // PERUBAHAN UTAMA: TOMBOL PADA LIST HIGH ALERT MEMANGGIL openHighAlertModal(item.sbg)\
+                    listOver12.innerHTML += `\
+                        <div class="bg-white p-3 rounded-xl border border-red-200/80 shadow-xs flex items-center justify-between hover:shadow-md transition">\
+                            <div class="space-y-0.5">\
+                                <p class="text-xs font-black text-slate-800">$\{item.no\}. $\{item.sbg\} - <span class="font-bold text-slate-700">$\{item.nasabah\}</span></p>\
+                                <div class="flex items-center space-x-2 pt-0.5">\
+                                    <span class="bg-red-100 text-red-700 text-[10px] font-extrabold px-2 py-0.5 rounded-md">$\{statusText\}</span>\
+                                    <span class="text-[11px] font-bold text-red-600"><i class="fa-regular fa-clock mr-1"></i>$\{item.durasiJam\} Jam</span>\
+                                </div>\
+                            </div>\
+                            <button onclick="openHighAlertModal('$\{item.sbg\}')" class="bg-red-600 hover:bg-red-700 text-white font-extrabold text-[11px] px-3 py-1.5 rounded-lg btn-press transition shadow-xs">\
+                                Detail\
+                            </button>\
+                        </div>\
+                    `;\
+                \});\
+            \}\
+        \}\
+\
+        // FUNGSI MEMBUKA MODAL KHUSUS HIGH ALERT SESUAI GAMBAR LAMPIRAN\
+        function openHighAlertModal(sbg) \{\
+            const item = masterAgunanList.find(x => x.sbg === sbg) || masterAgunanList[4];\
+            currentHighAlertSBG = item.sbg;\
+\
+            document.getElementById('high-alert-title').innerText = `Detail Agunan \'96 $\{item.sbg\}`;\
+            document.getElementById('ha-nasabah').innerText = item.nasabah;\
+            document.getElementById('ha-nik').innerText = item.nik;\
+            document.getElementById('ha-cif').innerText = item.cif;\
+            document.getElementById('ha-sbg').innerText = item.sbg;\
+            document.getElementById('ha-rfid').innerText = item.rfid;\
+            document.getElementById('ha-produk').innerText = item.produk;\
+            document.getElementById('ha-rubrik').innerText = item.rubrik;\
+            document.getElementById('ha-statuskredit').innerText = item.statusKredit;\
+            document.getElementById('ha-taksiran').innerText = item.taksiran;\
+            document.getElementById('ha-pinjaman').innerText = item.pinjaman;\
+            document.getElementById('ha-detailbj').innerText = `Agunan $\{item.rubrik.toUpperCase()\} 13 Unit/Gram`;\
+            document.getElementById('ha-foto').src = item.foto;\
+\
+            // Reset textarea alasan & tombol validasi selesai\
+            document.getElementById('input-alasan-validasi').value = "";\
+            document.getElementById('btn-submit-validasi').disabled = true;\
+\
+            document.getElementById('modal-high-alert-validation').classList.remove('hidden');\
+        \}\
+\
+        function closeHighAlertModal() \{\
+            document.getElementById('modal-high-alert-validation').classList.add('hidden');\
+        \}\
+\
+        // FUNGSI CEK ISI TEXTAREA ALASAN VALIDASI (TOMBOL AKTIF HANYA JIKA TERISI)\
+        function checkValidationInput() \{\
+            const val = document.getElementById('input-alasan-validasi').value.trim();\
+            const btn = document.getElementById('btn-submit-validasi');\
+            if (val.length > 0) \{\
+                btn.disabled = false;\
+            \} else \{\
+                btn.disabled = true;\
+            \}\
+        \}\
+\
+        // FUNGSI SUBMIT VALIDASI SELESAI\
+        function submitValidasiHighAlert() \{\
+            const alasan = document.getElementById('input-alasan-validasi').value.trim();\
+            if(!alasan) return;\
+\
+            alert(`\uc0\u10003  Validasi Selesai untuk SBG $\{currentHighAlertSBG\} berhasil disimpan!\\nAlasan: "$\{alasan\}"`);\
+            \
+            // Ubah status item di master list menjadi selesai atau hapus dari alert\
+            const itemIndex = masterAgunanList.findIndex(x => x.sbg === currentHighAlertSBG);\
+            if(itemIndex !== -1) \{\
+                masterAgunanList[itemIndex].alertType = "NORMAL";\
+                masterAgunanList[itemIndex].statusCss = "BJ Selesai";\
+            \}\
+\
+            closeHighAlertModal();\
+            renderDashboardMonitoring();\
+        \}\
+\
+        function renderMonitoringTable() \{\
+            const tbody = document.getElementById('table-agunan-body');\
+            tbody.innerHTML = "";\
+\
+            let filtered = masterAgunanList;\
+\
+            if (activeAlertFilter !== "ALL") \{\
+                filtered = filtered.filter(x => x.alertType === activeAlertFilter);\
+            \} else if (activeStatusFilter !== "ALL") \{\
+                filtered = filtered.filter(x => x.statusCss === activeStatusFilter);\
+            \}\
+\
+            document.getElementById('total-mon-count').innerText = filtered.length;\
+\
+            filtered.forEach((item, idx) => \{\
+                let durasiBadge = `<span class="text-slate-400 font-semibold">-</span>`;\
+                if (item.durasiJam > 0) \{\
+                    if (item.durasiJam > 12) \{\
+                        durasiBadge = `<span class="bg-red-100 text-red-700 font-black px-2 py-0.5 rounded-md text-[10px] animate-pulse"><i class="fa-solid fa-clock mr-1"></i>$\{item.durasiJam\} Jam (> 12 Jam)</span>`;\
+                    \} else \{\
+                        durasiBadge = `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-md text-[10px]"><i class="fa-solid fa-clock mr-1"></i>$\{item.durasiJam\} Jam (< 12 Jam)</span>`;\
+                    \}\
+                \}\
+\
+                tbody.innerHTML += `\
+                    <tr class="hover:bg-slate-50/80 transition-colors duration-150 border-b border-slate-100">\
+                        <td class="p-3.5 text-center font-bold">$\{idx + 1\}</td>\
+                        <td class="p-3.5 font-extrabold text-[#005a43]">$\{item.sbg\}</td>\
+                        <td class="p-3.5 font-bold text-slate-800">$\{item.nasabah\}</td>\
+                        <td class="p-3.5 font-bold text-emerald-800"><span class="bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200">$\{item.rubrik\}</span></td>\
+                        <td class="p-3.5 font-bold">$\{formatBadgeCss(item.statusCss)\}</td>\
+                        <td class="p-3.5 font-bold">$\{durasiBadge\}</td>\
+                        <td class="p-3.5 text-slate-500 font-medium">$\{item.waktuTerakhir\}</td>\
+                        <td class="p-3.5 text-center">\
+                            <button onclick="openDetailModal('$\{item.sbg\}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-xl text-[11px] btn-press transition">\
+                                Detail\
+                            </button>\
+                        </td>\
+                    </tr>\
+                `;\
+            \});\
+        \}\
+\
+        function filterTableByStatus(st) \{\
+            activeAlertFilter = "ALL";\
+            activeStatusFilter = st;\
+            renderMonitoringTable();\
+        \}\
+\
+        function resetTableFilter() \{\
+            activeStatusFilter = "ALL";\
+            activeAlertFilter = "ALL";\
+            renderDashboardMonitoring();\
+        \}\
+\
+        function formatBadgeCss(st) \{\
+            switch(st) \{\
+                case 'BJ Pencairan Baru': return `<span class="bg-blue-100/90 text-blue-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                case 'BJ Siap Disimpan': return `<span class="bg-blue-100/90 text-blue-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                case 'BJ Masuk Kluis': return `<span class="bg-teal-100/90 text-teal-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                case 'BJ Keluar Kluis': return `<span class="bg-amber-100/90 text-amber-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                case 'BJ Ganti RFID': return `<span class="bg-amber-100/90 text-amber-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                case 'BJ Selesai': return `<span class="bg-slate-200 text-slate-800 font-black px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+                default: return `<span class="bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-md text-[10px]">$\{st\}</span>`;\
+            \}\
+        \}\
+\
+        function renderInventoryTracker() \{\
+            const tbody = document.getElementById('table-inventory-body');\
+            tbody.innerHTML = "";\
+\
+            const keyword = document.getElementById('inv-search-sbg').value.toLowerCase().trim();\
+            const produkVal = document.getElementById('inv-filter-produk').value;\
+            const rubrikVal = document.getElementById('inv-filter-rubrik').value;\
+            const statusKreditVal = document.getElementById('inv-filter-status-kredit').value;\
+            const limit = parseInt(document.getElementById('inv-limit-select').value) || 10;\
+\
+            let filtered = masterAgunanList;\
+\
+            if (keyword !== "") \{\
+                filtered = filtered.filter(x => x.sbg.toLowerCase().includes(keyword) || x.nasabah.toLowerCase().includes(keyword) || x.nik.toLowerCase().includes(keyword));\
+            \}\
+\
+            if (produkVal !== "") \{\
+                filtered = filtered.filter(x => x.produk === produkVal);\
+            \}\
+\
+            if (rubrikVal !== "") \{\
+                filtered = filtered.filter(x => x.rubrik === rubrikVal);\
+            \}\
+\
+            if (statusKreditVal !== "") \{\
+                filtered = filtered.filter(x => x.statusKredit === statusKreditVal);\
+            \}\
+\
+            filtered.slice(0, limit).forEach((item, idx) => \{\
+                tbody.innerHTML += `\
+                    <tr class="hover:bg-slate-50/80 transition-colors duration-150 border-b border-slate-100">\
+                        <td class="p-3.5 text-center font-bold text-slate-600">$\{idx + 1\}</td>\
+                        <td class="p-3.5 font-extrabold text-[#005a43]">$\{item.sbg\}</td>\
+                        <td class="p-3.5 font-bold text-slate-800">$\{item.nasabah\}</td>\
+                        <td class="p-3.5 font-bold text-blue-600">$\{item.rfid\}</td>\
+                        <td class="p-3.5 font-bold text-slate-700"><span class="bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[11px]">$\{item.rubrik\}</span></td>\
+                        <td class="p-3.5 font-semibold text-slate-700">$\{item.produk\}</td>\
+                        <td class="p-3.5 font-semibold text-slate-700">$\{item.statusProduk\}</td>\
+                        <td class="p-3.5 font-bold">$\{formatBadgeCss(item.statusCss)\}</td>\
+                        <td class="p-3.5 text-slate-500 font-medium">$\{item.waktuTerakhir\}</td>\
+                        <td class="p-3.5 text-center">\
+                            <button onclick="openDetailModal('$\{item.sbg\}')" class="border border-emerald-600 text-emerald-600 font-extrabold px-3 py-1 rounded-xl text-[11px] hover:bg-emerald-50 transition btn-press">\
+                                Detail\
+                            </button>\
+                        </td>\
+                    </tr>\
+                `;\
+            \});\
+        \}\
+\
+        function resetInventoryFilter() \{\
+            document.getElementById('inv-search-sbg').value = "";\
+            document.getElementById('inv-filter-preset').value = "";\
+            document.getElementById('inv-filter-produk').value = "";\
+            document.getElementById('inv-filter-rubrik').value = "";\
+            document.getElementById('inv-filter-status-kredit').value = "";\
+            document.getElementById('inv-date-from').value = "2026-05-01";\
+            document.getElementById('inv-date-to').value = "2026-08-05";\
+            document.getElementById('inv-limit-select').value = "10";\
+            renderInventoryTracker();\
+        \}\
+\
+        function switchLaporanTab(tab) \{\
+            activeLaporanTab = tab;\
+            const tabBj = document.getElementById('tab-log-bj');\
+            const tabKluis = document.getElementById('tab-log-kluis');\
+\
+            if (tab === 'bj') \{\
+                tabBj.className = "text-[#005a43] border-b-2 border-[#005a43] pb-2 font-black cursor-pointer transition-all";\
+                tabKluis.className = "hover:text-slate-800 cursor-pointer pb-2 transition-all";\
+            \} else \{\
+                tabKluis.className = "text-[#005a43] border-b-2 border-[#005a43] pb-2 font-black cursor-pointer transition-all";\
+                tabBj.className = "hover:text-slate-800 cursor-pointer pb-2 transition-all";\
+            \}\
+            renderLaporanData();\
+        \}\
+\
+        function renderLaporanData() \{\
+            const thead = document.getElementById('table-laporan-head');\
+            const tbody = document.getElementById('table-laporan-body');\
+            tbody.innerHTML = "";\
+\
+            const filterProduk = document.getElementById('lap-filter-produk').value;\
+            const filterRubrik = document.getElementById('lap-filter-rubrik').value;\
+            const filterStatusKredit = document.getElementById('lap-filter-status-kredit').value;\
+\
+            if (activeLaporanTab === 'bj') \{\
+                thead.innerHTML = `\
+                    <tr class="bg-[#005a43] text-white font-extrabold uppercase">\
+                        <th class="p-3.5 text-center">NO</th>\
+                        <th class="p-3.5">NAMA NASABAH</th>\
+                        <th class="p-3.5">NO SBG</th>\
+                        <th class="p-3.5">NAMA PRODUK</th>\
+                        <th class="p-3.5">STATUS PRODUK</th>\
+                        <th class="p-3.5">RUBRIK</th>\
+                        <th class="p-3.5">STATUS KREDIT</th>\
+                        <th class="p-3.5">NILAI TAKSIRAN</th>\
+                        <th class="p-3.5">UANG PINJAMAN</th>\
+                        <th class="p-3.5">STATUS TERAKHIR CSS</th>\
+                        <th class="p-3.5 text-center">ACTION</th>\
+                    </tr>\
+                `;\
+\
+                let filtered = masterAgunanList;\
+\
+                if (filterProduk !== "") \{\
+                    filtered = filtered.filter(x => x.produk === filterProduk);\
+                \}\
+                if (filterRubrik !== "") \{\
+                    filtered = filtered.filter(x => x.rubrik === filterRubrik);\
+                \}\
+                if (filterStatusKredit !== "") \{\
+                    filtered = filtered.filter(x => x.statusKredit === filterStatusKredit);\
+                \}\
+\
+                filtered.forEach((item, idx) => \{\
+                    tbody.innerHTML += `\
+                        <tr class="hover:bg-slate-50/80 transition-colors duration-150 border-b border-slate-100">\
+                            <td class="p-3.5 text-center font-bold text-slate-600">$\{idx + 1\}</td>\
+                            <td class="p-3.5 font-bold text-slate-800">$\{item.nasabah\}</td>\
+                            <td class="p-3.5 font-extrabold text-[#005a43]">$\{item.sbg\}</td>\
+                            <td class="p-3.5 font-semibold text-slate-700">$\{item.produk\}</td>\
+                            <td class="p-3.5 font-semibold text-slate-700">$\{item.statusProduk\}</td>\
+                            <td class="p-3.5 font-bold text-slate-700"><span class="bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[11px]">$\{item.rubrik\}</span></td>\
+                            <td class="p-3.5 font-extrabold text-blue-600">$\{item.statusKredit\}</td>\
+                            <td class="p-3.5 font-semibold text-slate-800">$\{item.taksiran\}</td>\
+                            <td class="p-3.5 font-extrabold text-slate-800">$\{item.pinjaman\}</td>\
+                            <td class="p-3.5 font-bold">$\{formatBadgeCss(item.statusCss)\}</td>\
+                            <td class="p-3.5 text-center">\
+                                <button onclick="openDetailModal('$\{item.sbg\}')" class="border border-emerald-600 text-emerald-600 font-extrabold px-3 py-1 rounded-xl text-[11px] hover:bg-emerald-50 transition btn-press">\
+                                    Detail\
+                                </button>\
+                            </td>\
+                        </tr>\
+                    `;\
+                \});\
+            \} else \{\
+                thead.innerHTML = `\
+                    <tr class="bg-[#005a43] text-white font-extrabold uppercase">\
+                        <th class="p-3.5 text-center">NO</th>\
+                        <th class="p-3.5">NAMA PIC</th>\
+                        <th class="p-3.5">ROLE (SESUAI DATA FAC)</th>\
+                        <th class="p-3.5">TANGGAL DAN WAKTU AKSES</th>\
+                    </tr>\
+                `;\
+\
+                masterAgunanList.slice(0, 10).forEach((item, idx) => \{\
+                    const pic = facPics[idx % facPics.length];\
+                    tbody.innerHTML += `\
+                        <tr class="hover:bg-slate-50/80 transition-colors duration-150 border-b border-slate-100">\
+                            <td class="p-3.5 text-center font-bold text-slate-600">$\{idx + 1\}</td>\
+                            <td class="p-3.5 font-bold text-slate-800">$\{pic.name\}</td>\
+                            <td class="p-3.5 font-extrabold text-teal-700">$\{pic.role\}</td>\
+                            <td class="p-3.5 text-slate-600 font-medium">$\{item.waktuTerakhir\}</td>\
+                        </tr>\
+                    `;\
+                \});\
+            \}\
+        \}\
+\
+        function resetLaporanFilter() \{\
+            document.getElementById('lap-filter-produk').value = "";\
+            document.getElementById('lap-filter-rubrik').value = "";\
+            document.getElementById('lap-filter-status-kredit').value = "";\
+            document.getElementById('lap-filter-preset').value = "7d";\
+            document.getElementById('lap-date-from').value = "2026-05-01";\
+            document.getElementById('lap-date-to').value = "2026-08-05";\
+            renderLaporanData();\
+        \}\
+\
+        function openDetailModal(sbg) \{\
+            const item = masterAgunanList.find(x => x.sbg === sbg) || masterAgunanList[0];\
+            document.getElementById('pop-title-header').innerText = `Detail Inventory - $\{item.sbg\}`;\
+\
+            const container = document.getElementById('pop-content-container');\
+            container.innerHTML = `\
+                <div class="space-y-6 text-xs text-slate-700">\
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">\
+                        <div class="bg-slate-50/80 rounded-2xl border border-slate-200/90 p-4 space-y-3">\
+                            <div class="border-b border-slate-200 pb-2">\
+                                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">\
+                                    <i class="fa-solid fa-user-gear text-emerald-700"></i>\
+                                    Informasi Nasabah dan Kredit\
+                                </h4>\
+                            </div>\
+                            <div class="space-y-2">\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Nama Nasabah:</span><span class="font-extrabold text-slate-900">$\{item.nasabah\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">No. SBG:</span><span class="font-extrabold text-emerald-800">$\{item.sbg\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">No. CIF:</span><span class="font-bold text-slate-800">$\{item.cif\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Nilai Taksiran:</span><span class="font-bold text-slate-900">$\{item.taksiran\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Nilai Uang Pinjaman:</span><span class="font-extrabold text-slate-900">$\{item.pinjaman\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Tgl Kredit:</span><span class="font-semibold text-slate-800">$\{item.tglKredit\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Tgl Jatuh Tempo:</span><span class="font-semibold text-slate-800">$\{item.tglJatuhTempo\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Tgl Lelang:</span><span class="font-semibold text-slate-800">$\{item.tglLelang\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Tgl Lunas:</span><span class="font-semibold text-slate-800">$\{item.tglLunas\}</span></div>\
+                                <div class="flex justify-between border-b border-slate-100 pb-1"><span class="text-slate-500 font-medium">Tgl Ambil:</span><span class="font-semibold text-slate-800">$\{item.tglAmbil\}</span></div>\
+                                <div class="flex justify-between pt-0.5"><span class="text-slate-500 font-medium">Status Kredit:</span><span class="font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">$\{item.statusKredit\}</span></div>\
+                            </div>\
+                        </div>\
+\
+                        <div class="bg-slate-50/80 rounded-2xl border border-slate-200/90 p-4 space-y-3">\
+                            <div class="border-b border-slate-200 pb-2">\
+                                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">\
+                                    <i class="fa-solid fa-box text-blue-600"></i>\
+                                    Data Akun Barang Jaminan\
+                                </h4>\
+                            </div>\
+                            <div class="space-y-3">\
+                                <div>\
+                                    <p class="text-slate-500 font-medium mb-1">Detail Barang Jaminan:</p>\
+                                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 font-semibold text-slate-800">$\{item.detailBj\}</div>\
+                                </div>\
+                                <div>\
+                                    <p class="text-slate-500 font-medium mb-1">Foto Barang Jaminan:</p>\
+                                    <div class="w-32 h-32 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-200 relative group">\
+                                        <img src="$\{item.foto\}" alt="Foto BJ" class="w-full h-full object-cover">\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+\
+                    <div class="bg-slate-50/80 rounded-2xl border border-slate-200/90 p-4 space-y-3">\
+                        <div class="border-b border-slate-200 pb-2 flex justify-between items-center">\
+                            <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">\
+                                <i class="fa-solid fa-satellite-dish text-teal-700"></i>\
+                                TRACKING RFID & STATUS\
+                            </h4>\
+                            <span class="text-[11px] font-bold text-slate-400">Log Aktivitas Terakhir</span>\
+                        </div>\
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Status BJ Saat Ini:</span><div>$\{formatBadgeCss(item.statusCss)\}</div></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">No Tag RFID Aktif:</span><span class="font-extrabold text-blue-600">$\{item.rfid\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Pencairan:</span><span class="font-medium text-slate-800">$\{item.tglAktif\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Penaksir (Pencairan):</span><span class="font-semibold text-slate-800">$\{item.penaksirPencairan\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Pairing:</span><span class="font-medium text-slate-800">$\{item.tglPairing\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Penaksir (Pairing):</span><span class="font-semibold text-slate-800">$\{item.penaksirPairing\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Masuk Kluis:</span><span class="font-medium text-slate-800">$\{item.tglMasukKluis\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Pengelola Agunan (Masuk):</span><span class="font-semibold text-slate-800">$\{item.pengelolaMasuk\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Keluar Kluis:</span><span class="font-medium text-slate-800">$\{item.tglKeluarKluis\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Pengelola Agunan (Keluar):</span><span class="font-semibold text-slate-800">$\{item.pengelolaKeluar\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Unpairing:</span><span class="font-medium text-slate-800">$\{item.tglUnpairing\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Penaksir (Unpairing):</span><span class="font-semibold text-slate-800">$\{item.penaksirUnpairing\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Tgl & Waktu Pairing Ulang:</span><span class="font-medium text-slate-800">$\{item.tglPairingUlang\}</span></div>\
+                            <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500 font-medium">Nama Penaksir (Pairing Ulang):</span><span class="font-semibold text-slate-800">$\{item.penaksirPairingUlang\}</span></div>\
+                            <div class="flex justify-between pt-0.5 col-span-1 md:col-span-2"><span class="text-slate-500 font-medium">Tgl & Waktu Selesai (Pelunasan/Penyerahan):</span><span class="font-extrabold text-slate-900">$\{item.tglSelesai\}</span></div>\
+                        </div>\
+                    </div>\
+                </div>\
+            `;\
+\
+            document.getElementById('modal-detail-sbg').classList.remove('hidden');\
+        \}\
+\
+        function closeDetailModal() \{\
+            document.getElementById('modal-detail-sbg').classList.add('hidden');\
+        \}\
+\
+        function openModalApm() \{\
+            document.getElementById('modal-detail-apm').classList.remove('hidden');\
+        \}\
+\
+        function closeModalApm() \{\
+            document.getElementById('modal-detail-apm').classList.add('hidden');\
+        \}\
+\
+        function openHandheldModal(mode) \{\
+            document.getElementById('modal-action-screen').classList.remove('hidden');\
+            if (mode === 'unpairing') \{\
+                switchHandheldMode('unpairing');\
+            \} else \{\
+                switchHandheldMode('pairing');\
+            \}\
+        \}\
+\
+        function closeHandheldModal() \{\
+            document.getElementById('modal-action-screen').classList.add('hidden');\
+            resetHandheldFlow();\
+        \}\
+\
+        function switchHandheldMode(mode) \{\
+            const tabPair = document.getElementById('tab-mode-pairing');\
+            const tabUnpair = document.getElementById('tab-mode-unpairing');\
+            const flowPair = document.getElementById('flow-pairing-container');\
+            const flowUnpair = document.getElementById('flow-unpairing-container');\
+\
+            if (mode === 'pairing') \{\
+                tabPair.className = "flex-1 py-2 bg-[#005a43] text-white rounded-xl transition btn-press shadow-xs";\
+                tabUnpair.className = "flex-1 py-2 bg-slate-200 text-slate-700 rounded-xl transition btn-press";\
+                flowPair.classList.remove('hidden');\
+                flowUnpair.classList.add('hidden');\
+            \} else \{\
+                tabUnpair.className = "flex-1 py-2 bg-red-600 text-white rounded-xl transition btn-press shadow-xs";\
+                tabPair.className = "flex-1 py-2 bg-slate-200 text-slate-700 rounded-xl transition btn-press";\
+                flowUnpair.classList.remove('hidden');\
+                flowPair.classList.add('hidden');\
+            \}\
+        \}\
+\
+        function triggerStep1ScanQR() \{\
+            document.getElementById('res-step-1').classList.remove('hidden');\
+            document.getElementById('icon-chk-1').classList.remove('hidden');\
+            \
+            const step2 = document.getElementById('step-pair-2');\
+            step2.classList.remove('opacity-40', 'pointer-events-none');\
+            step2.classList.add('bg-white');\
+        \}\
+\
+        function triggerStep2Foto() \{\
+            document.getElementById('res-step-2').classList.remove('hidden');\
+            document.getElementById('icon-chk-2').classList.remove('hidden');\
+\
+            const step3 = document.getElementById('step-pair-3');\
+            step3.classList.remove('opacity-40', 'pointer-events-none');\
+            step3.classList.add('bg-white');\
+        \}\
+\
+        function triggerStep3ScanRFID() \{\
+            document.getElementById('res-step-3').classList.remove('hidden');\
+            document.getElementById('icon-chk-3').classList.remove('hidden');\
+            document.getElementById('step-pair-4').classList.remove('hidden');\
+        \}\
+\
+        function submitFinalPairingBaru() \{\
+            alert('\uc0\u10003  Berhasil melakukan Pairing Barang Jaminan!');\
+            closeHandheldModal();\
+            renderDashboardMonitoring();\
+        \}\
+\
+        function triggerUnpairingScan() \{\
+            document.getElementById('unpair-info-box').classList.remove('hidden');\
+        \}\
+\
+        function submitFinalUnpairing() \{\
+            alert('\uc0\u10003  Unpairing Sukses! Status barang berpindah ke BJ Ganti RFID dan masuk ke antrean Pairing Ulang.');\
+            closeHandheldModal();\
+            renderDashboardMonitoring();\
+        \}\
+\
+        function resetHandheldFlow() \{\
+            document.getElementById('res-step-1').classList.add('hidden');\
+            document.getElementById('res-step-2').classList.add('hidden');\
+            document.getElementById('res-step-3').classList.add('hidden');\
+            document.getElementById('icon-chk-1').classList.add('hidden');\
+            document.getElementById('icon-chk-2').classList.add('hidden');\
+            document.getElementById('icon-chk-3').classList.add('hidden');\
+            document.getElementById('step-pair-4').classList.add('hidden');\
+\
+            const step2 = document.getElementById('step-pair-2');\
+            step2.classList.add('opacity-40', 'pointer-events-none');\
+            step2.classList.remove('bg-white');\
+\
+            const step3 = document.getElementById('step-pair-3');\
+            step3.classList.add('opacity-40', 'pointer-events-none');\
+            step3.classList.remove('bg-white');\
+\
+            document.getElementById('unpair-info-box').classList.add('hidden');\
+        \}\
+\
+        function exportExcelSimulasi() \{\
+            alert('Mengunduh Laporan dalam Format Excel (.xlsx)...');\
+        \}\
+\
+        function downloadPdfSimulasi() \{\
+            window.print();\
+        \}\
+\
+        document.addEventListener('DOMContentLoaded', () => \{\
+            initAuth();\
+            initMasterData();\
+            animateCounters();\
+        \});\
+    </script>\
+</body>\
+</html>}
